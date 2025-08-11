@@ -1,0 +1,2672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiruvananthapuram City Circular Bus Tracker | KSRTC</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
+    <style>
+        :root {
+            --ksrtc-green: #006837;
+            --ksrtc-yellow: #FFD700;
+            --ksrtc-white: #FFFFFF;
+            --ksrtc-lightgray: #F5F5F5;
+            --ksrtc-red: #D32F2F;
+           
+        }
+        
+        /* Base styles for all devices */
+        body {
+            font-family: 'Noto Sans Malayalam', 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+        /* Background image for larger screens */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('bus.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Content container */
+        .content-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Language Selector */
+        .language-selector {
+           display: flex;
+            justify-content: center;;
+            gap: 10px;
+            margin: 20px;
+            padding: 10px 0 0 0;
+        }
+
+        .lang-btn {
+            padding: 25px 30px;
+            border: 2px solid var(--ksrtc-green);
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--ksrtc-green);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 104, 55, 0.2);
+        }
+        .lang-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        :root {
+            --ksrtc-green: #006837;
+            --ksrtc-yellow: #FFD700;
+            --ksrtc-white: #FFFFFF;
+            --ksrtc-lightgray: #F5F5F5;
+            --ksrtc-red: #D32F2F;
+        }
+        
+        /* Base styles for all devices */
+        body {
+            font-family: 'Noto Sans Malayalam', 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+        /* Background image for larger screens */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('bus.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Content container */
+        .content-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: var(--ksrtc-red);
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .marquee {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Header with logo and kathakali */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--ksrtc-white);
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .kathakali-img {
+            height: 70px;
+            display: none; /* Hidden on mobile by default */
+        }
+
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-title h1 {
+            color: var(--ksrtc-green);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .header-title p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Official banner */
+        .official-banner {
+            background-color: var(--ksrtc-yellow);
+            color: #000;
+            padding: 8px 0;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .user-guide-box {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--ksrtc-green);
+            position: relative;
+        }
+
+        .user-guide-box h3 {
+            color: var(--ksrtc-green);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--ksrtc-yellow);
+            display: inline-block;
+        }
+
+        .guide-steps {
+            display: grid;
+            gap: 20px;
+        }
+
+        .guide-step {
+            display: flex;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: var(--ksrtc-green);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-content strong {
+            color: var(--ksrtc-green);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+
+
+
+        /* Control Panel */
+        .control-panel {
+            background: var(--ksrtc-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 100%;
+        }
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--ksrtc-green);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--ksrtc-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,104,55,0.2);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--ksrtc-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #005a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Results Container */
+        .results-container {
+            background: var(--ksrtc-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .bus-route {
+            border-left: 4px solid var(--ksrtc-green);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--ksrtc-lightgray);
+            border-radius: 0 6px 6px 0;
+            transition: all 0.3s;
+        }
+
+        .bus-route:hover {
+            transform: translateX(4px);
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .route-number {
+            font-weight: 700;
+            color: var(--ksrtc-green);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .route-name {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .route-details {
+            margin-top: 0.5rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Instructions Section */
+        .instructions {
+            background: var(--ksrtc-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .instructions h3 {
+            color: var(--ksrtc-green);
+            margin-top: 0;
+            border-bottom: 2px solid var(--ksrtc-yellow);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* All Routes Section */
+        .all-routes {
+            background: var(--ksrtc-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .all-routes h2 {
+            color: var(--ksrtc-green);
+            margin-top: 0;
+            border-bottom: 2px solid var(--ksrtc-yellow);
+            padding-bottom: 0.5rem;
+        }
+
+        .route-table-container {
+            overflow-x: auto;
+        }
+
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            min-width: 600px;
+        }
+
+        .route-table th, .route-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .route-table th {
+            background-color: var(--ksrtc-green);
+            color: white;
+        }
+        .route-air-rail {
+    border-left-color: #00BFFF;  
+    background-color: #F0F8FF;  
+     }
+        .route-prk-tvm-neyyattinkara {
+    border-left-color: #8B0000; 
+    background-color: #FFE4E1; 
+}
+        .route-pezhumoodu {
+    border-left-color: #006400; 
+    background-color: #F0FFF0; 
+}
+        .route-plavode {
+    border-left-color: #4B0082; 
+    background-color: #F5F0FF;
+}
+        .route-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .route-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Route color coding */
+        .route-1 { border-left-color: #FF0000; }
+        .route-2 { border-left-color: #0000FF; }
+        .route-3 { border-left-color: #FF00FF; }
+        .route-4 { border-left-color: #FFFF00; background-color: #FFFFF0; }
+        .route-5 { border-left-color: #800080; }
+        .route-6 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-7 { border-left-color: #008000; }
+        .route-8 { border-left-color: #87CEEB; }
+        .route-9 { border-left-color: #FFA500; }
+        .route-10 { border-left-color: #4B0082; }
+        .route-11 { border-left-color: #FFD700; background-color: #FFFACD; }
+        .route-12 { border-left-color: #808000; background-color: #F0F0E0; }
+        .route-13 { border-left-color: #00FFFF; }
+        .route-11C1 {border-left-color: #D4AF37; background-color: #FFFAF0;}
+        .route-11C2 {border-left-color: #D4AF37; background-color: #FFFAF0;}
+        .route-11A2 {border-left-color: #D4AF37; background-color: #FFFAF0;}
+        .route-11C3 {border-left-color: #D4AF37; background-color: #FFFAF0;}
+        .route-11A3{border-left-color: #D4AF37; background-color: #FFFAF0;}
+        .route-1C-2 { border-left-color: #FF0000; }
+        .route-1A-2 { border-left-color: #FF0000; }
+        .route-1C-3 { border-left-color: #FF0000; }
+        .route-1A-3 { border-left-color: #FF0000; }
+        .route-2C-2 { border-left-color: #0000FF; }
+        .route-2A-3 { border-left-color: #0000FF; }
+        .route-7C-1 { border-left-color: #008000; }
+        .route-7A-1 { border-left-color: #008000; }
+        .route-7C-2 { border-left-color: #008000; }
+        .route-7A-2 { border-left-color: #008000; }
+        .route-7C-3 { border-left-color: #008000; }
+        .route-7A-3 { border-left-color: #008000; }
+        .route-6C-1 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6A-1 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6C-2 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6A-2 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6C-3 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6A-3 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6C-5 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-6A-4 { border-left-color: #A52A2A; background-color: #F5F5DC; }
+        .route-9C-1 { border-left-color: #FFA500; }
+        .route-9A-1 { border-left-color: #FFA500; }
+        .route-9C-2 { border-left-color: #FFA500; }
+        .route-9A-2 { border-left-color: #FFA500; }
+
+
+        /* Add this after .bus-route styles */
+.bus-route.route-air-rail {
+    border-left: 4px solid #00BFFF;
+    background-color: #F0F8FF;
+}
+
+.bus-route.route-prk-tvm-neyyattinkara {
+    border-left: 4px solid #8B0000;
+    background-color: #FFE4E1;
+}
+
+.bus-route.route-pezhumoodu {
+    border-left: 4px solid #006400;
+    background-color: #F0FFF0;
+}
+
+.bus-route.route-plavode {
+    border-left: 4px solid #4B0082;
+    background-color: #F5F0FF;
+}
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            color: var(--ksrtc-yellow);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #444;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--ksrtc-yellow);
+        }
+
+        .contact-info {
+            margin-top: 0.5rem;
+        }
+
+        .contact-info div {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid #444;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Tablet and Desktop Styles */
+        @media (min-width: 768px) {
+            .content-container {
+                padding: 20px;
+            }
+            
+            .kathakali-img {
+                display: block;
+                height: 70px;
+            }
+            
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .input-field {
+                min-width: 250px;
+            }
+            
+            .btn {
+                width: auto;
+                margin-bottom: 0;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            /* Adjust background for larger screens */
+            body::before {
+                width: 50%;
+                opacity: 0.5;
+            }
+        }
+
+        /* Large Desktop Styles */
+        @media (min-width: 1024px) {
+            .container {
+                padding: 20px 40px;
+            }
+            
+            .header-title h1 {
+                font-size: 2rem;
+            }
+            
+            .input-group {
+                flex-wrap: nowrap;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 480px) {
+            .top-banner {
+                font-size: 0.7rem;
+                padding: 5px 0;
+            }
+            
+            .header-title h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header-title p {
+                font-size: 0.7rem;
+            }
+            
+            .official-banner {
+                font-size: 0.8rem;
+                padding: 5px 0;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .control-panel, .results-container, .instructions, .all-routes {
+                padding: 1rem;
+            }
+            
+            .route-details p {
+                font-size: 0.8rem;
+            }
+            .spelling-suggestion {
+                background-color: #fff3cd;
+                border-left: 4px solid #ffc107;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border-radius: 0 6px 6px 0;
+            }
+            .spelling-suggestion p {
+    margin-top: 0;
+    color: #856404;
+}
+
+#use-suggestion-btn {
+    margin-top: 0.5rem;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+        }
+        
+            
+            
+            .input-field input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    color: #555; /* Add text color */
+}
+
+.input-field input::placeholder {
+    color: #999; /* Placeholder text color */
+    opacity: 1; /* Ensure it's fully visible */
+}
+
+.input-field input:focus::placeholder {
+    color: #ccc; /* Lighter color when focused */
+}
+            .btn {
+                width: auto;
+                margin-bottom: 0;
+            }
+    </style>
+
+
+        
+</head>
+<body>
+    <div class="content-container">
+        <!-- Language Selector -->
+        
+
+        <!-- Top Banner with Scrolling Text -->
+            <div class="top-banner">
+        <div class="marquee">
+            <span style="color:var(--ksrtc-yellow);">ബസ് നിരക്ക്: ₹10 മുതൽ ₹30 വരെ | Bus fare: ₹10 to ₹30 | बस किराया: ₹10 से ₹30</span>
+            സർക്കുലാർ സർവീസ് ഓരോ 15-30 മിനിറ്റ് ഇടവിട്ട് പ്രവർത്തിക്കുന്നു | Circular service runs every 15-30 minutes | सर्कुलर सेवा हर 15-30 मिनट में चलती है
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header-container">
+        <div class="header-title">
+            <h1 data-en="KERALA STATE ROAD TRANSPORT CORPORATION" 
+                data-ml="കേരള സ്റ്റേറ്റ് റോഡ് ട്രാൻസ്പോർട്ട് കോർപ്പറേഷൻ" 
+                data-hi="केरल राज्य सड़क परिवहन निगम">KERALA STATE ROAD TRANSPORT CORPORATION</h1>
+            <p data-en="Thiruvananthapuram City Bus Service" 
+               data-ml="തിരുവനന്തപുരം സിറ്റി ബസ് സർവീസ്" 
+               data-hi="तिरुवनंतपुरम सिटी बस सेवा">Thiruvananthapuram City Bus Service</p>
+        </div>
+        <img src="kathakali.png" alt="Kathakali" class="kathakali-img">
+    </div>
+
+    <div class="official-banner" data-en="THIRUVANANTHAPURAM CITY BUS SERVICE" 
+         data-ml="തിരുവനന്തപുരം സിറ്റി ബസ് സർവീസ്" 
+         data-hi="तिरुवनंतपुरम सिटी बस सेवा"
+        data-en="THIRUVANANTHAPURAM CITY BUS SERVICE">
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Enhanced User Guide -->
+        <section class="user-guide-box">
+            <h3 data-en="User Guide" data-ml="ഉപയോക്തൃ മാർഗ്ഗദർശിക" data-hi="उपयोगकर्ता गाइड">User Guide</h3>
+            <div class="guide-steps">
+                <div class="guide-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong data-en="Enter Locations" data-ml="സ്ഥലങ്ങൾ നൽകുക" data-hi="स्थान दर्ज करें">Enter Locations</strong>
+                        <span data-en="Type your starting point in the 'From' field and destination in the 'To' field below. Our system will automatically suggest stops as you type."
+                              data-ml="താഴെയുള്ള 'From' ഫീൽഡിൽ നിങ്ങളുടെ ആരംഭ സ്ഥലവും 'To' ഫീൽഡിൽ ലക്ഷ്യസ്ഥാനവും ടൈപ്പ് ചെയ്യുക. നിങ്ങൾ ടൈപ്പ് ചെയ്യുമ്പോൾ സിസ്റ്റം സ്റ്റോപ്പുകൾ സ്വയം സൂചിപ്പിക്കും."
+                              data-hi="नीचे 'From' फील्ड में अपना प्रारंभिक स्थान और 'To' फील्ड में गंतव्य टाइप करें। जैसे ही आप टाइप करेंगे, सिस्टम स्वचालित रूप से स्टॉप सुझाएगा।">
+                              Type your starting point in the 'From' field and destination in the 'To' field below. Our system will automatically suggest stops as you type.
+                        </span>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong data-en="Find Your Bus" data-ml="നിങ്ങളുടെ ബസ് കണ്ടെത്തുക" data-hi="अपनी बस खोजें">Find Your Bus</strong>
+                        <span data-en="Click 'Find Buses' to see direct routes between your locations, or 'Show All Routes' to view the complete list of city circular buses."
+                              data-ml="നിങ്ങളുടെ സ്ഥലങ്ങൾക്കിടയിലുള്ള നേരിട്ടുള്ള റൂട്ടുകൾ കാണാൻ 'Find Buses' ക്ലിക്ക് ചെയ്യുക, അല്ലെങ്കിൽ സിറ്റി സർക്കുലാർ ബസുകളുടെ പൂർണ്ണ ലിസ്റ്റ് കാണാൻ 'Show All Routes' ക്ലിക്ക് ചെയ്യുക."
+                              data-hi="अपने स्थानों के बीच सीधे मार्ग देखने के लिए 'Find Buses' पर क्लिक करें, या शहर की सर्कुलर बसों की पूरी सूची देखने के लिए 'Show All Routes' पर क्लिक करें।">
+                              Click 'Find Buses' to see direct routes between your locations, or 'Show All Routes' to view the complete list of city circular buses.
+                        </span>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong data-en="View Route Details" data-ml="റൂട്ട് വിശദാംശങ്ങൾ കാണുക" data-hi="मार्ग विवरण देखें">View Route Details</strong>
+                        <span data-en="Each bus route will display all stops with timing information. Color-coded routes help identify different circular services quickly."
+                              data-ml="ഓരോ ബസ് റൂട്ടും എല്ലാ സ്റ്റോപ്പുകളും സമയ വിവരങ്ങളും പ്രദർശിപ്പിക്കും. വ്യത്യസ്ത സർക്കുലാർ സേവനങ്ങൾ വേഗത്തിൽ തിരിച്ചറിയാൻ വർണ്ണ കോഡ് ചെയ്ത റൂട്ടുകൾ സഹായിക്കുന്നു."
+                              data-hi="प्रत्येक बस मार्ग सभी स्टॉप्स के साथ समय की जानकारी प्रदर्शित करेगा। रंग-कोडित मार्ग विभिन्न सर्कुलर सेवाओं को जल्दी से पहचानने में मदद करते हैं।">
+                              Each bus route will display all stops with timing information. Color-coded routes help identify different circular services quickly.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Language Selector - Moved after User Guide -->
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="ml">മലയാളം</button>
+            <button class="lang-btn" data-lang="hi">हिन्दी</button>
+        </div>
+
+        <!-- Control Panel with Labels -->
+        <section class="control-panel">
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="from-input" class="input-label" data-en="From" data-ml="എവിടെ നിന്ന്" data-hi="कहां से">From</label>
+                    <input type="text" id="from-input" 
+                           data-placeholder-en="e.g. East Fort" 
+                           data-placeholder-ml="ഉദാ. ഈസ്റ്റ് ഫോർട്ട്" 
+                           data-placeholder-hi="जैसे ईस्ट फोर्ट" 
+                           placeholder="e.g. East Fort" 
+                           aria-label="Starting location">
+                </div>
+                <div class="input-field">
+                    <label for="to-input" class="input-label" data-en="To" data-ml="എവിടെയേക്ക്" data-hi="कहां तक">To</label>
+                    <input type="text" id="to-input" 
+                           data-placeholder-en="e.g. Overbridge" 
+                           data-placeholder-ml="ഉദാ. ഓവർബ്രിഡ്ജ്" 
+                           data-placeholder-hi="जैसे ओवरब्रिज" 
+                           placeholder="e.g. Overbridge" 
+                           aria-label="Destination">
+                </div>
+            </div>
+            <div class="input-group">
+                <button id="search-btn" class="btn btn-primary">
+                    <i class="fas fa-search"></i> <span data-en="Find Buses" data-ml="ബസുകൾ കണ്ടെത്തുക" data-hi="बसें खोजें">Find Buses</span>
+                </button>
+                <button id="show-all-btn" class="btn btn-secondary">
+                    <i class="fas fa-bus"></i> <span data-en="Show All Routes" data-ml="എല്ലാ റൂട്ടുകളും കാണിക്കുക" data-hi="सभी मार्ग दिखाएं">Show All Routes</span>
+                </button>
+            </div>
+        </section>
+            <section class="results-container">
+                <div id="results"></div>
+            </section>
+
+            <section class="all-routes">
+                <h2 data-en="All City Circular Routes" data-ml="എല്ലാ സിറ്റി സർക്കുലർ റൂട്ടുകൾ" data-hi="सभी शहर परिपत्र मार्ग">All City Circular Routes</h2>
+                <div class="route-table-container">
+                    <table class="route-table">
+                        <thead>
+                            <tr>
+                                <th data-en="Route No." data-ml="റൂട്ട് നമ്പർ" data-hi="मार्ग संख्या">Route No.</th>
+                                <th data-en="Route Name" data-ml="റൂട്ട് പേര്" data-hi="मार्ग नाम">Route Name</th>
+                                <th data-en="Route Details" data-ml="റൂട്ട് വിശദാംശങ്ങൾ" data-hi="मार्ग विवरण">Route Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-routes-table">
+                            <!-- Routes will be displayed here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-ticket-alt"></i> View Booking</a></li>
+                        <li><a href="#"><i class="fas fa-times-circle"></i> Cancellation</a></li>
+                        <li><a href="#"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <div><i class="fas fa-phone"></i> 0471-2463799</div>
+                        <div><i class="fas fa-mobile-alt"></i> 9447071021</div>
+                        <div><i class="fas fa-phone-volume"></i> 18005994011 (Toll Free)</div>
+                        <div><i class="fab fa-whatsapp"></i> 9497722205</div>
+                        <div><i class="fas fa-envelope"></i> rsnksrtc@kerala.gov.in</div>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-route"></i> Route Related Enquiry</a></li>
+                        <li><a href="#"><i class="fas fa-laptop-code"></i> Technical Enquiry</a></li>
+                        <li><a href="#"><i class="fas fa-image"></i> Gallery</a></li>
+                        <li><a href="#"><i class="fas fa-lock"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-alt"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Corporate Office</h3>
+                    <p>
+                        <i class="fas fa-building"></i> Kerala State Road Transport Corporation<br>
+                        Office of Managing Director<br>
+                        Transport Bhavan, Fort<br>
+                        Thiruvananthapuram, Kerala<br>
+                        India - 695023
+                    </p>
+                    
+                    <h3>Social media</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/KeralaStateRoadTransportCorporation" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/invites/contact" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/transport_state?s=08" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/82535522/admin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@keralastateroadtransportco3176" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+                    </footer>
+    </div>
+    <script>
+        // Current language (default: English)
+        let currentLang = 'en';
+
+        // Bus routes data with multilingual support
+    const busRoutes = [
+            {
+                number: "1C/1A",
+                name: {
+                    en: "Red Clockwise/Anti-Clockwise",
+                    ml: "ചുവപ്പ് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+                    hi: "लाल दक्षिणावर्त/वामावर्त"
+                },
+                stops: {
+                    en: ["East Fort", "Overbridge", "Thampanoor", "Ayurveda College", "Statue", "Spencer", "VJT", "Kerala University", "Palayam", "Legislature", "PMG", "Vikas Bhavan Depot", "LMS", "Museum", "Kanakakunnu", "Manaveeyam Road", "Police Headquarters", "Vazhuthakkad", "Police Training College", "Mettukada", "Thycaud Hospital", "flyover"],
+                    ml: ["ഈസ്റ്റ് ഫോർട്ട്", "ഓവർബ്രിഡ്ജ്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യു", "സ്പെൻസർ", "വി.ജെ.ടി", "കേരള സർവ്വകലാശാല", "പളയം", "നിയമസഭ", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "എൽ.എം.എസ്", "മ്യൂസിയം", "കനകക്കുന്ന്", "മനവീയം റോഡ്", "പോലീസ് ഹെഡ്ക്വാർട്ടേഴ്സ്", "വഴുതക്കാട്", "പോലീസ് ട്രെയിനിംഗ് കോളേജ്", "മെട്ടുകട", "തൈക്കാട് ആശുപത്രി", "ഫ്ലൈ ഓവർ"],
+                    hi: ["ईस्ट फोर्ट", "ओवरब्रिज", "थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "स्पेंसर", "वीजेटी", "केरल विश्वविद्यालय", "पलायम", "विधानसभा", "पीएमजी", "विकास भवन डिपो", "एलएमएस", "संग्रहालय", "कनककुन्नु", "मनवीयम रोड", "पुलिस मुख्यालय", "वऴुथकाड", "पुलिस प्रशिक्षण कॉलेज", "मेट्टुकाडा", "थाइकाड अस्पताल", "फ्लाई ओवर"]
+                },
+                schedule: {
+                    en: "Every 10-15 minutes from 6:00 AM to 10:00 PM",
+                    ml: "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 10-15 മിനിറ്റ് ഇടവിട്ട്",
+                    hi: "सुबह 6:00 बजे से रात 10:00 बजे तक हर 10-15 मिनट में"
+                }
+            },
+            {
+                number: "2C/2A",
+                name: {
+                    en: "Blue Clockwise/Anti-Clockwise",
+                    ml: "നീല ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+                    hi: "नीला दक्षिणावर्त/वामावर्त"
+                },
+                stops: {
+                    en: ["East Fort", "Overbridge", "Thampanoor", "Ayurveda College", "Uppitamudu Bridge", "Vanchiyur Court", "Pattur", "General Hospital", "Kerala University", "Palayam", "Legislature", "PMG", "LMS", "Museum", "Kanakakunnu", "Vellayambalam", "Shastamangalam", "Sri Ramakrishna Hospital", "Marutankuzhi", "Kochar Road", "Edapachinji", "Jagati", "Vazhuthakad", "Bakery Junction", "Jacobs Junction", "Cantonment Gate"],
+                    ml: ["ഈസ്റ്റ് ഫോർട്ട്", "ഓവർബ്രിഡ്ജ്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "ഉപ്പിടമൂട് പാലം", "വഞ്ചിയൂർ കോടതി", "പാട്ടൂർ", "ജനറൽ ആശുപത്രി", "കേരള സർവ്വകലാശാല", "പളയം", "നിയമസഭ", "പി.എം.ജി", "എൽ.എം.എസ്", "മ്യൂസിയം", "കനകക്കുന്ന്", "വെള്ളയംബലം", "ശാസ്താമംഗലം", "ശ്രീ രാമകൃഷ്ണ ആശുപത്രി", "മരുതംകുഴി", "കൊച്ചാർ റോഡ്", "എടപ്പഴഞ്ചി", "ജഗതി", "വഴുതക്കാട്", "ബേക്കറി ജംഗ്ഷൻ", "ജേക്കബ്സ് ജംഗ്ഷൻ", "കാന്റോണ്മെന്റ് ഗേറ്റ്"],
+                    hi: ["ईस्ट फोर्ट", "ओवरब्रिज", "थम्पानूर", "आयुर्वेद कॉलेज", "उप्पीटमूडू पुल", "वंचियूर कोर्ट", "पट्टूर", "जनरल अस्पताल", "केरल विश्वविद्यालय", "पलायम", "विधानसभा", "पीएमजी", "एलएमएस", "संग्रहालय", "कनककुन्नु", "वेल्लायम्बलम", "शास्तामंगलम", "श्री रामकृष्ण अस्पताल", "मरुतंकुझी", "कोचर रोड", "एडापझंजी", "जगती", "वऴुथकाड", "बेकरी जंक्शन", "जैकब्स जंक्शन", "कैंटोनमेंट गेट"]
+                },
+                schedule: {
+                    en: "Every 15-20 minutes from 6:00 AM to 10:00 PM",
+                    ml: "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15-20 മിനിറ്റ് ഇടവിട്ട്",
+                    hi: "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15-20 मिनट में"
+                }
+            },
+            
+    
+    {
+        number: "3C/3A",
+        name: {
+            en: "Magenta Clockwise/Anti-Clockwise",
+            ml: "മജന്റ ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "मैजेंटा दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Peroorkada Depot", "Peroorkada", "Ambalamukk", "Kowdiar", "TTC", "Vellayambalam", "Museum", "LMS", "Palayam", "Statue", "Thampanoor", "Aristo", "Model School", "Bakery (Underpass)", "RBI", "Palayam (Stadium)", "Legislature", "PMG", "Plamoodu", "Pattom", "Kesavadasapuram", "Pattom", "Kuravankonam", "Kowdiar", "Ambalammukku", "Peroorkada", "Peroorkada Depot"],
+            ml: ["പെരൂർക്കട ഡിപ്പോ", "പെരൂർക്കട", "അമ്പലംമുക്ക്", "കോവിടയാർ", "ടി.ടി.സി", "വെള്ളയംബലം", "മ്യൂസിയം", "എൽ.എം.എസ്", "പളയം", "സ്റ്റാച്യൂ", "തമ്പാനൂർ", "അരിസ്റ്റോ", "മോഡൽ സ്കൂൾ", "ബേക്കറി (അണ്ടർപാസ്)", "ആർ.ബി.ഐ", "പളയം (സ്റ്റേഡിയം)", "നിയമസഭ", "പി.എം.ജി", "പ്ലാമൂട്", "പട്ടം", "കേശവദാസപുരം", "പട്ടം", "കുറവൻകോണം", "കോവിടയാർ", "അമ്പലംമുക്ക്", "പെരൂർക്കട", "പെരൂർക്കട ഡിപ്പോ"],
+            hi: ["पेरूरकाडा डिपो", "पेरूरकाडा", "अम्बलमुक्कु", "कोविडियार", "टीटीसी", "वेल्लायम्बलम", "संग्रहालय", "एलएमएस", "पलायम", "मूर्ति", "थम्पानूर", "अरिस्टो", "मॉडल स्कूल", "बेकरी (अंडरपास)", "आरबीआई", "पलायम (स्टेडियम)", "विधानसभा", "पीएमजी", "प्लामूडु", "पट्टम", "केशवदासपुरम", "पट्टम", "कुरवनकोणम", "कोविडियार", "अम्बलमुक्कु", "पेरूरकाडा", "पेरूरकाडा डिपो"]
+        },
+        schedule: {
+            en: "Every 20 minutes from 6:00 AM to 9:30 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:30 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:30 बजे तक हर 20 मिनट में"
+        }
+    },
+    {
+        number: "4C/4A",
+        name: {
+            en: "Yellow Clockwise/Anti-Clockwise",
+            ml: "മഞ്ഞ ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "पीला दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Peroorkada Depot", "Peroorkada", "Ambalamukku", "Kowdiar", "TTC", "Devaswom Board", "Nanthancode", "Museum", "LMS", "Palayam", "VJT", "Kerala University", "Flyover", "Legislature", "PMG", "Plamoodu", "Pattom", "Potakuzhi", "Medical College", "Ulloor", "Kesavadasapuram", "Paruthipara", "Muttada", "Vayalikada", "Santwana Junction", "Ambalamukku", "Peroorkada", "Peroorkada Depot"],
+            ml: ["പെരൂർക്കട ഡിപ്പോ", "പെരൂർക്കട", "അമ്പലംമുക്ക്", "കോവിടയാർ", "ടി.ടി.സി", "ദേവസ്വം ബോർഡ്", "നന്തൻകോഡ്", "മ്യൂസിയം", "എൽ.എം.എസ്", "പളയം", "വി.ജെ.ടി", "കേരള സർവ്വകലാശാല", "ഫ്ലൈഓവർ", "നിയമസഭ", "പി.എം.ജി", "പ്ലാമൂട്", "പട്ടം", "പൊട്ടകുഴി", "മെഡിക്കൽ കോളേജ്", "ഉള്ളൂർ", "കേശവദാസപുരം", "പരുത്തിപ്പറ", "മുട്ടട", "വയലിക്കട", "സന്ത്വന ജംഗ്ഷൻ", "അമ്പലംമുക്ക്", "പെരൂർക്കട", "പെരൂർക്കട ഡിപ്പോ"],
+            hi: ["पेरूरकाडा डिपो", "पेरूरकाडा", "अम्बलमुक्कु", "कोविडियार", "टीटीसी", "देवस्वम बोर्ड", "नंथनकोड", "संग्रहालय", "एलएमएस", "पलायम", "वीजेटी", "केरल विश्वविद्यालय", "फ्लाईओवर", "विधानसभा", "पीएमजी", "प्लामूडु", "पट्टम", "पोटकुजी", "मेडिकल कॉलेज", "उल्लूर", "केशवदासपुरम", "परुथिप्परा", "मुट्टाडा", "वयलिकाडा", "संतवना जंक्शन", "अम्बलमुक्कु", "पेरूरकाडा", "पेरूरकाडा डिपो"]
+        },
+        schedule: {
+            en: "Every 20 minutes from 6:00 AM to 9:30 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:30 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:30 बजे तक हर 20 मिनट में"
+        }
+    },
+    {
+        number: "5C/5A",
+        name: {
+            en: "Violet Clockwise/Anti-Clockwise",
+            ml: "വയലറ്റ് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "बैंगनी दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Peroorkada Depot", "Oolampara", "HLL", "Pipinmood", "Edapazhanji", "Cotton Hill School, Vazhuthacaud", "Mettukada", "Thycaud", "Thampanoor", "Ayurveda College", "Statue", "Palayam", "Assembly", "LMS", "Museum", "Vellayambalam", "TTC", "Kowdiar", "Ambalamukku", "Peroorkada", "Peroorkada Depot"],
+            ml: ["പെരൂർക്കട ഡിപ്പോ", "ഊലംപറ", "എച്ച്.എൽ.എൽ", "പിപ്പിൻമൂട്", "എടപഴഞ്ചി", "കോട്ടൺ ഹിൽ സ്കൂൾ, വഴുതക്കാട്", "മെട്ടുകട", "തൈക്കാട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പളയം", "അസംബ്ലി", "എൽ.എം.എസ്", "മ്യൂസിയം", "വെള്ളയംബലം", "ടി.ടി.സി", "കോവിടയാർ", "അമ്പലംമുക്ക്", "പെരൂർക്കട", "പെരൂർക്കട ഡിപ്പോ"],
+            hi: ["पेरूरकाडा डिपो", "ऊलमपरा", "एचएलएल", "पिपिनमूड", "एडापझंजी", "कॉटन हिल स्कूल, वऴुथकाड", "मेट्टुकाडा", "थाइकाड", "थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "असेंबली", "एलएमएस", "संग्रहालय", "वेल्लायम्बलम", "टीटीसी", "कोविडियार", "अम्बलमुक्कु", "पेरूरकाडा", "पेरूरकाडा डिपो"]
+        },
+        schedule: {
+            en: "Every 20-25 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 20-25 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 20-25 मिनट में"
+        }
+    },
+    {
+        number: "6C/6A",
+        name: {
+            en: "Brown Clockwise/Anti-Clockwise",
+            ml: "തവിട്ട് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "भूरा दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["East Fort", "Overbridge", "Thampanoor", "flyover", "Chenthitta", "Kannettumukku", "Jagathy", "Edapazhanji", "Sasthamangalam", "Sree Ramakrishna Hospital", "Maruthamkuzhi", "Forest Office (PTP Nagar)", "PTP Nagar", "Vettamukku", "Ilipode", "Valiyavila", "Tirumala", "Vijayamohini Mill", "Poojappura", "Kunchalumoodu", "Karamana", "Killipalam", "Attakkulangara Road", "East Fort"],
+            ml: ["ഈസ്റ്റ് ഫോർട്ട്", "ഓവർബ്രിഡ്ജ്", "തമ്പാനൂർ", "ഫ്ലൈഓവർ", "ചെന്തിട്ട", "കണ്ണെട്ടുമുക്ക്", "ജാഗതി", "എടപഴഞ്ചി", "ശാസ്താമംഗലം", "ശ്രീ രാമകൃഷ്ണ ആശുപത്രി", "മരുതംകുഴി", "ഫോറസ്റ്റ് ഓഫീസ് (പി.ടി.പി നഗർ)", "പി.ടി.പി നഗർ", "വെട്ടമുക്ക്", "ഇലിപ്പോട്", "വലിയവില", "തിരുമല", "വിജയമോഹിനി മിൽ", "പൂജപ്പുറ", "കുഞ്ചാലുമൂട്", "കരമന", "കിളിപ്പാലം", "അട്ടക്കുളങ്ങര റോഡ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            hi: ["ईस्ट फोर्ट", "ओवरब्रिज", "थम्पानूर", "फ्लाईओवर", "चेंथिट्टा", "कन्नेट्टुमुक्कु", "जगथी", "एडापझंजी", "शास्तामंगलम", "श्री रामकृष्ण अस्पताल", "मरुथम्कुझी", "वन कार्यालय (पीटीपी नगर)", "पीटीपी नगर", "वेट्टामुक्कु", "इलिप्पोड", "वलियविला", "तिरुमला", "विजयमोहिनी मिल", "पूजप्पुरा", "कुंचालुमूडु", "करमना", "किल्लिपलम", "अट्टक्कुलंगरा रोड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "7C/7A",
+        name: {
+            en: "Green Clockwise/Anti-Clockwise",
+            ml: "പച്ച ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "हरा दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["East Fort", "Transport Bhavan", "Vazhappally", "Fort Hospital", "Uppidamoodu Bridge", "Petta Pallimukku", "Kannammoola", "Kumarapuram", "Medical College", "Muringapalam", "Pottakuzhi", "Theekumoodu", "Anadyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "P. M. G.", "L. M. S.", "Palayam", "Statue", "Ayurveda College", "Overbridge", "Thampanoor", "Overbridge", "East Fort"],
+            ml: ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പെട്ട പള്ളിമുക്ക്", "കണ്ണമ്മൂല", "കുമാരപുരം", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പളം", "പൊട്ടകുഴി", "തീക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "എൽ.എം.എസ്", "പളയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "ഓവർബ്രിഡ്ജ്", "തമ്പാനൂർ", "ഓവർബ്രിഡ്ജ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            hi: ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वऴप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूडू ब्रिज", "पेट्टा पल्लिमुक्कु", "कन्नम्मूला", "कुमारपुरम", "मेडिकल कॉलेज", "मुरिंजपलम", "पोट्टकुझी", "थीकुमूड", "आनडियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "एलएमएस", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "ओवरब्रिज", "थम्पानूर", "ओवरब्रिज", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            en: "Every 20 minutes from 6:00 AM to 9:30 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:30 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:30 बजे तक हर 20 मिनट में"
+        }
+    },
+    {
+        number: "8C/8A",
+        name: {
+            en: "Air - Rail Clockwise/Anti-Clockwise",
+            ml: "എയർ - റെയിൽ ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "एयर - रेल दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["East Fort North Bus Stand", "Thampanoor Railway Station", "East Fort South Bus Stand", "Manacaud", "Valiyathura", "Airport (Domestic)", "Airport (International)", "Chakka", "Pettah", "Pattur", "Kerala University", "Thampanoor Railway Station", "East Fort"],
+            ml: ["ഈസ്റ്റ് ഫോർട്ട് നോർത്ത് ബസ് സ്റ്റാൻഡ്", "തമ്പാനൂർ റെയിൽവേ സ്റ്റേഷൻ", "ഈസ്റ്റ് ഫോർട്ട് സൗത്ത് ബസ് സ്റ്റാൻഡ്", "മണയ്ക്കാട്", "വലിയതുറ", "എയർപോർട്ട് (ഡൊമസ്റ്റിക്)", "എയർപോർട്ട് (ഇന്റർനാഷണൽ)", "ചക്ക", "പെട്ട", "പട്ടൂർ", "കേരള സർവ്വകലാശാല", "തമ്പാനൂർ റെയിൽവേ സ്റ്റേഷൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            hi: ["ईस्ट फोर्ट नॉर्थ बस स्टैंड", "थम्पानूर रेलवे स्टेशन", "ईस्ट फोर्ट साउथ बस स्टैंड", "मणकाड", "वलियथुरा", "एयरपोर्ट (डोमेस्टिक)", "एयरपोर्ट (इंटरनेशनल)", "चक्का", "पेट्टा", "पट्टूर", "केरल विश्वविद्यालय", "थम्पानूर रेलवे स्टेशन", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 5:30 AM to 10:30 PM",
+            ml: "രാവിലെ 5:30 മുതൽ രാത്രി 10:30 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 5:30 बजे से रात 10:30 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "9C/9A",
+        name: {
+            en: "Orange Clockwise/Anti-Clockwise",
+            ml: "ഓറഞ്ച് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "नारंगी दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["East Fort", "Thampanoor", "Overbridge", "Secretariat", "Pattor", "Chakai", "Shangumugham", "Airport", "Valiyathura", "Kallumoodu", "Manacaud", "East Fort"],
+            ml: ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ഓവർബ്രിഡ്ജ്", "സെക്രട്ടേറിയറ്റ്", "പട്ടൂർ", "ചക്ക", "ശംഖുമുഖം", "എയർപോർട്ട്", "വലിയതുറ", "കള്ളുമൂട്", "മണയ്ക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            hi: ["ईस्ट फोर्ट", "थम्पानूर", "ओवरब्रिज", "सचिवालय", "पट्टूर", "चक्का", "शंखमुखम", "एयरपोर्ट", "वलियथुरा", "कल्लुमूड", "मणकाड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "10C/10A",
+        name: {
+            en: "Indigo Clockwise/Anti-Clockwise",
+            ml: "ഇൻഡിഗോ ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "इंडिगो दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Thampanoor", "East Fort South Bus Stand", "Kalipankulam", "Koncharivila Temple", "Bound Road", "Milma", "Thiruvallam", "Ambalathara", "Kamaleswaram", "Manacaud", "East Fort North Bus Stand", "Thampanoor"],
+            ml: ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട് സൗത്ത് ബസ് സ്റ്റാൻഡ്", "കലിപ്പൻകുളം", "കൊഞ്ചരിവിള ക്ഷേത്രം", "ബൗണ്ട് റോഡ്", "മിൽമ", "തിരുവല്ലം", "അമ്പലത്തറ", "കമലേശ്വരം", "മണയ്ക്കാട്", "ഈസ്റ്റ് ഫോർട്ട് നോർത്ത് ബസ് സ്റ്റാൻഡ്", "തമ്പാനൂർ"],
+            hi: ["थम्पानूर", "ईस्ट फोर्ट साउथ बस स्टैंड", "कलिपनकुलम", "कोन्चरिविला मंदिर", "बाउंड रोड", "मिल्मा", "तिरुवल्लम", "अम्बलथरा", "कमलेश्वरम", "मणकाड", "ईस्ट फोर्ट नॉर्थ बस स्टैंड", "थम्पानूर"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത्रി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "11C/11A",
+        name: {
+            en: "Gold Clockwise/Anti-Clockwise",
+            ml: "ഗോൾഡ് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "सोना दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Thampanoor", "East Fort South Bus Stand", "Manacaud", "Kamaleswaram", "Ambalathara", "Poonthura", "Beemapally", "Valiyathura", "Mukkolakkal", "Manacaud", "East Fort North Bus Stand", "Thampanoor"],
+            ml: ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട് സൗത്ത് ബസ് സ്റ്റാൻഡ്", "മണയ്ക്കാട്", "കമലേശ്വരം", "അമ്പലത്തറ", "പൂന്തുറ", "ബീമാപള്ളി", "വലിയതുറ", "മുക്കോലക്കൽ", "മണയ്ക്കാട്", "ഈസ്റ്റ് ഫോർട്ട് നോർത്ത് ബസ് സ്റ്റാൻഡ്", "തമ്പാനൂർ"],
+            hi: ["थम्पानूर", "ईस्ट फोर्ट साउथ बस स्टैंड", "मणकाड", "कमलेश्वरम", "अम्बलथरा", "पून्थुरा", "बीमापल्ली", "वलियथुरा", "मुक्कोलक्कल", "मणकाड", "ईस्ट फोर्ट नॉर्थ बस स्टैंड", "थम्पानूर"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "12C/12A",
+        name: {
+            en: "Olive Clockwise/Anti-Clockwise",
+            ml: "ഒലിവ് ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "जैतून दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Thampanoor", "East Fort South Bus Stand", "Eenchakkal", "Vallakadavu", "Ponnara Bridge", "Sulaiman Street", "Domestic", "Airport (International)", "Chakka", "Petta", "Pattur", "Kerala University", "Thampanoor"],
+            ml: ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട് സൗത്ത് ബസ് സ്റ്റാൻഡ്", "ഈഞ്ചക്കൽ", "വള്ളക്കടവ്", "പൊന്നര പാലം", "സുലൈമാൻ സ്ട്രീറ്റ്", "ഡൊമസ്റ്റിക്", "എയർപോർട്ട് (ഇന്റർനാഷണൽ)", "ചക്ക", "പെട്ട", "പട്ടൂർ", "കേരള സർവ്വകലാശാല", "തമ്പാനൂർ"],
+            hi: ["थम्पानूर", "ईस्ट फोर्ट साउथ बस स्टैंड", "ईंचक्कल", "वल्लक्काडवु", "पोन्नारा पुल", "सुलैमान स्ट्रीट", "डोमेस्टिक", "एयरपोर्ट (इंटरनेशनल)", "चक्का", "पेट्टा", "पट्टूर", "केरल विश्वविद्यालय", "थम्पानूर"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    {
+        number: "13C/13A",
+        name: {
+            en: "Cyan Clockwise/Anti-Clockwise",
+            ml: "സയൻ ക്ലോക്ക്വൈസ്/ആന്റി-ക്ലോക്ക്വൈസ്",
+            hi: "सियान दक्षिणावर्त/वामावर्त"
+        },
+        stops: {
+            en: ["Thampanoor", "East Fort South Bus Stand", "Kamaleswaram", "Kallettumukku", "Ambalathara", "Manikkavilakam", "Kallumoodu", "Manacaud", "East Fort North Bus Stand", "Thampanoor"],
+            ml: ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട് സൗത്ത് ബസ് സ്റ്റാൻഡ്", "കമലേശ്വരം", "കള്ളെട്ടുമുക്ക്", "അമ്പലത്തറ", "മണിക്കവിളകം", "കള്ളുമൂട്", "മണയ്ക്കാട്", "ഈസ്റ്റ് ഫോർട്ട് നോർത്ത് ബസ് സ്റ്റാൻഡ്", "തമ്പാനൂർ"],
+            hi: ["थम्पानूर", "ईस्ट फोर्ट साउथ बस स्टैंड", "कमलेश्वरम", "कल्लेट्टुमुक्कु", "अम्बलथरा", "मणिक्कविलकम", "कल्लुमूड", "मणकाड", "ईस्ट फोर्ट नॉर्थ बस स्टैंड", "थम्पानूर"]
+        },
+        schedule: {
+            en: "Every 30 minutes from 6:00 AM to 9:00 PM",
+            ml: "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+            hi: "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+        }
+    },
+    
+    {
+        number: "11C1",
+        name: {
+                "en": "Gold Clockwise Circular",
+                "ml": "ഗോൾഡ് ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड दक्षिणावर्त सर्कुलर"
+            },
+        stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Mukkolakkal", "Valiyathura", "Beemapally", "Poonthura", "Ambalathara", "Kamaleswaram", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ", "വലിയതുറ", "ബീമാപള്ളി", "പൂന്തുറ", "അമ്പലത്തറ", "കമലേശ്വരം", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल", "वलियथुरा", "बीमापल्ली", "पून्थुरा", "अम्बलथरा", "कमलेश्वरम", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+        schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+    },
+    {
+        number: "11A1",
+        name: {
+                "en": "Gold Clockwise Circular",
+                "ml": "ഗോൾഡ് ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड दक्षिणावर्त सर्कुलर"
+            },
+        stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Mukkolakkal", "Valiyathura", "Beemapally", "Poonthura", "Ambalathara", "Kamaleswaram", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ", "വലിയതുറ", "ബീമാപള്ളി", "പൂന്തുറ", "അമ്പലത്തറ", "കമലേശ്വരം", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल", "वलियथुरा", "बीमापल्ली", "पून्थुरा", "अम्बलथरा", "कमलेश्वरम", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+        schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+    },
+    {
+        number: "11C2",
+        name: {
+                "en": "Gold Clockwise Circular",
+                "ml": "ഗോൾഡ് ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड दक्षिणावर्त सर्कुलर"
+            },
+            stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Mukkolakkal", "Valiyathura", "Beemapally", "Poonthura", "Ambalathara", "Kamaleswaram", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ", "വലിയതുറ", "ബീമാപള്ളി", "പൂന്തുറ", "അമ്പലത്തറ", "കമലേശ്വരം", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल", "वलियथुरा", "बीमापल्ली", "पून्थुरा", "अम्बलथरा", "कमलेश्वरम", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+    },
+        {
+            number: "11A2",
+            name: {
+                "en": "Gold Clockwise Circular",
+                "ml": "ഗോൾഡ് ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड दक्षिणावर्त सर्कुलर"
+            },
+            stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Mukkolakkal", "Valiyathura", "Beemapally", "Poonthura", "Ambalathara", "Kamaleswaram", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ", "വലിയതുറ", "ബീമാപള്ളി", "പൂന്തുറ", "അമ്പലത്തറ", "കമലേശ്വരം", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल", "वलियथुरा", "बीमापल्ली", "पून्थुरा", "अम्बलथरा", "कमलेश्वरम", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "11C3",
+            name: {
+                "en": "Gold Anti-Clockwise Circular",
+                "ml": "ഗോൾഡ് ആന്റി ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड वामावर्त सर्कुलर"
+            },
+            stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Kamaleswaram", "Ambalathara", "Poonthura", "Beemapally", "Valiyathura", "Mukkolakkal", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "കമലേശ്വരം", "അമ്പലത്തറ", "പൂന്തുറ", "ബീമാപള്ളി", "വലിയതുറ", "മുക്കോലക്കൽ", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "कमलेश्वरम", "अम्बलथरा", "पून्थुरा", "बीमापल्ली", "वलियथुरा", "मुक्कोलक्कल", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "11A3",
+            name: {
+                "en": "Gold Anti-Clockwise Circular",
+                "ml": "ഗോൾഡ് ആന്റി ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड वामावर्त सर्कुलर"
+            },
+            stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Kamaleswaram", "Ambalathara", "Poonthura", "Beemapally", "Valiyathura", "Mukkolakkal", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "കമലേശ്വരം", "അമ്പലത്തറ", "പൂന്തുറ", "ബീമാപള്ളി", "വലിയതുറ", "മുക്കോലക്കൽ", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "कमलेश्वरम", "अम्बलथरा", "पून्थुरा", "बीमापल्ली", "वलियथुरा", "मुक्कोलक्कल", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "11C4",
+            name: {
+                "en": "Gold Anti-Clockwise Circular",
+                "ml": "ഗോൾഡ് ആന്റി ക്ലോക്ക്വൈസ് സർക്കുലാർ",
+                "hi": "गोल्ड वामावर्त सर्कुलर"
+            },
+            stops: {
+                "en": ["Thampanoor", "East Fort", "Manacaud", "Kamaleswaram", "Ambalathara", "Poonthura", "Beemapally", "Valiyathura", "Mukkolakkal", "Manacaud", "East Fort", "Thampanoor"],
+                "ml": ["തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "കമലേശ്വരം", "അമ്പലത്തറ", "പൂന്തുറ", "ബീമാപള്ളി", "വലിയതുറ", "മുക്കോലക്കൽ", "മണക്കാട്", "ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ"],
+                "hi": ["थम्पानूर", "ईस्ट फोर्ट", "मनकाड", "कमलेश्वरम", "अम्बलथरा", "पून्थुरा", "बीमापल्ली", "वलियथुरा", "मुक्कोलक्कल", "मनकाड", "ईस्ट फोर्ट", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "5C/5A",
+            name: {
+                "en": "Violet Circle City Circular & Fast",
+                "ml": "വയലറ്റ് സർക്കിൾ സിറ്റി സർക്കുലാർ & ഫാസ്റ്റ്",
+                "hi": "वायलेट सर्कल सिटी सर्कुलर और फास्ट"
+            },
+            stops: {
+                "en": ["Sasthamangalam", "Vazhuthacaud", "Trivandrum", "Statue", "Palayam"],
+                "ml": ["ശാസ്താമംഗലം", "വഴുതക്കാട്", "തിരുവനന്തപുരം", "സ്റ്റാച്യൂ", "പാലയം"],
+                "hi": ["शास्तामंगलम", "वझुथकाड", "त्रिवेंद्रम", "स्टैच्यू", "पालयम"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "5C/5A",
+            name: {
+                "en": "Violet Circle City Circular",
+                "ml": "വയലറ്റ് സർക്കിൾ സിറ്റി സർക്കുലാർ",
+                "hi": "वायलेट सर्कल सिटी सर्कुलर"
+            },
+            stops: {
+                "en": ["Vellayambalam", "Statue", "Trivandrum", "Vazhuthacaud", "Edapazhinji", "Sasthamangalam"],
+                "ml": ["വെള്ളയംബലം", "സ്റ്റാച്യൂ", "തിരുവനന്തപുരം", "വഴുതക്കാട്", "ഇടപഴിഞ്ഞി", "ശാസ്താമംഗലം"],
+                "hi": ["वेल्लायम्बलम", "स्टैच्यू", "त्रिवेंद्रम", "वझुथकाड", "एडापझिंजी", "शास्तामंगलम"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:30 AM to 9:30 PM",
+                "ml": "രാവിലെ 6:30 മുതൽ രാത്രി 9:30 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:30 बजे से रात 9:30 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        
+        
+        
+        {
+            number: "3C/3A",
+            name: {
+                "en": "Magenta Circle City Circular & Fast",
+                "ml": "മജന്റ സർക്കിൾ സിറ്റി സർക്കുലാർ & ഫാസ്റ്റ്",
+                "hi": "मैजेंटा सर्कल सिटी सर्कुलर और फास्ट"
+            },
+            stops: {
+                "en": ["Kuravankonam", "Pattom", "Bakery", "Trivandrum", "Statue", "Kesavadasapuram", "Pattom", "Marappalam", "Peroorkada"],
+                "ml": ["കുറവൻകോണം", "പട്ടം", "ബേക്കറി", "തിരുവനന്തപുരം", "സ്റ്റാച്യൂ", "കേശവദാസപുരം", "പട്ടം", "മറപ്പളം", "പെരൂർക്കട"],
+                "hi": ["कुरवनकोणम", "पट्टम", "बेकरी", "त्रिवेंद्रम", "मूर्ति", "केसवदासपुरम", "पट्टम", "मरप्पलम", "पेरूरकाडा"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "5C/5A",
+            name: {
+                "en": "Violet Clockwise City Circular & Fast",
+                "ml": "വയലറ്റ് ക്ലോക്ക്വൈസ് സിറ്റി സർക്കുലാർ & ഫാസ്റ്റ്",
+                "hi": "वायलेट दक्षिणावर्त सिटी सर्कुलर और फास्ट"
+            },
+            stops: {
+                "en": ["Sasthamangalam", "Edapazhinji", "Vazhuthacaud", "Thampanoor", "Palayam", "Vellayambalam", "Peroorkada"],
+                "ml": ["ശാസ്താമംഗലം", "ഇടപഴിഞ്ഞി", "വഴുതക്കാട്", "തമ്പാനൂർ", "പാലയം", "വെള്ളയംബലം", "പെരൂർക്കട"],
+                "hi": ["शास्तामंगलम", "एडापझिंजी", "वझुथकाड", "थम्पानूर", "पालयम", "वेल्लायम्बलम", "पेरूरकाडा"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "PRK - TVM - Neyyattinkara City Fast",
+            name: {
+                "en": "PRK - TVM - Neyyattinkara City Fast",
+                "ml": "പി.ആർ.കെ - ടി.വി.എം - നെയ്യാറ്റിൻകര സിറ്റി ഫാസ്റ്റ്",
+                "hi": "पीआरके - टीवीएम - नेय्याट्टिंकरा सिटी फास्ट"
+            },
+            stops: {
+                "en": ["Pappanamcode", "Balaramapuram", "Neyyattinkara"],
+                "ml": ["പപ്പാനംകോഡ്", "ബാലരാമപുരം", "നെയ്യാറ്റിൻകര"],
+                "hi": ["पप्पानमकोड", "बालरामपुरम", "नेय्याट्टिंकरा"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 5:30 AM to 10:30 PM",
+                "ml": "രാവിലെ 5:30 മുതൽ രാത്രി 10:30 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 5:30 बजे से रात 10:30 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "Pezhumoodu City Circular & Fast",
+            name: {
+                "en": "Pezhumoodu City Circular & Fast",
+                "ml": "പെഴുമൂട് സിറ്റി സർക്കുലാർ & ഫാസ്റ്റ്",
+                "hi": "पेझुमूडू सिटी सर्कुलर और फास्ट"
+            },
+            stops: {
+                "en": ["Mullassery", "Pezhumoodu", "Vattappara", "Mannanthala", "Pattom"],
+                "ml": ["മുള്ളശ്ശേരി", "പെഴുമൂട്", "വാട്ടപ്പാറ", "മണ്ണന്തല", "പട്ടം"],
+                "hi": ["मुल्लासेरी", "पेझुमूडू", "वट्टप्पारा", "मन्नान्थला", "पट्टम"]
+            },
+            schedule: {
+                "en": "Every 25 minutes from 6:15 AM to 9:15 PM",
+                "ml": "രാവിലെ 6:15 മുതൽ രാത്രി 9:15 വരെ ഓരോ 25 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:15 बजे से रात 9:15 बजे तक हर 25 मिनट में"
+            },
+            
+        },
+        {
+            number: "Plavode City Circular & Fast",
+            name: {
+                "en": "Plavode City Circular & Fast",
+                "ml": "പ്ലാവോഡ് സിറ്റി സർക്കുലാർ & ഫാസ്റ്റ്",
+                "hi": "प्लावोड सिटी सर्कुलर और फास्ट"
+            },
+            stops: {
+                "en": ["Vattiyoorkavu", "Kulasekharam", "Kodunganoor", "Sasthamangalam"],
+                "ml": ["വട്ടിയൂർക്കാവ്", "കുളശേഖരം", "കൊടുങ്ങാനൂർ", "ശാസ്താമംഗലം"],
+                "hi": ["वट्टियूर्कावु", "कुलशेखरम", "कोडुंगानूर", "शास्तामंगलम"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "3C/3A",
+            name: {
+                "en": "Magenta Circle City Circular",
+                "ml": "മജന്റ സർക്കിൾ സിറ്റി സർക്കുലാർ",
+                "hi": "मैजेंटा सर्कल सिटी सर्कुलर"
+            },
+            stops: {
+                "en": ["Kowdiar", "Marappalam", "Pattom", "PMG Junction", "Bakery", "Trivandrum", "Statue", "Vellayambalam"],
+                "ml": ["കോവടിയാർ", "മറപ്പളം", "പട്ടം", "പി.എം.ജി ജംഗ്ഷൻ", "ബേക്കറി", "തിരുവനന്തപുരം", "സ്റ്റാച്യൂ", "വെള്ളയംബലം"],
+                "hi": ["कोवडियार", "मरप्पलम", "पट्टम", "पीएमजी जंक्शन", "बेकरी", "त्रिवेंद्रम", "मूर्ति", "वेल्लायम्बलम"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 9:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 9:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 9:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        
+        
+        {
+            number: "1C",
+            name: {
+                "en": "Red Clockwise-1",
+                "ml": "ചുവപ്പ് ക്ലോക്ക്വൈസ്-1",
+                "hi": "लाल दक्षिणावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Ayurveda College", "Statue", "Palayam", "Vellayambalam", "Vazhuthakkadu", "Mettukada", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "വെള്ളയംബലം", "വഴുതക്കാട്", "മെട്ടുകട", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "वेल्लायम्बलम", "वझुथक्काडु", "मेट्टुकाडा", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 10 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 10 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 10 मिनट में"
+            },
+            
+        },
+        {
+            number: "1A",
+            name: {
+                "en": "Red Anti Clockwise-1",
+                "ml": "ചുവപ്പ് ആന്റി ക്ലോക്ക്വൈസ്-1",
+                "hi": "लाल वामावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Mettukada", "Vazhuthakkad", "Vellayambalam", "Palayam", "Statue", "Ayurveda College", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "മെട്ടുകട", "വഴുതക്കാട്", "വെള്ളയംബലം", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "मेट्टुकाडा", "वझुथक्काड", "वेल्लायम्बलम", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 10 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 10 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 10 मिनट में"
+            },
+            
+        },
+        {
+            number: "1C-2",
+            name: {
+                "en": "Red Clockwise-2 (Attukal Temple - Kanjiramkulam)",
+                "ml": "ചുവപ്പ് ക്ലോക്ക്വൈസ്-2 (അറ്റുകാൽ ക്ഷേത്രം - കാഞ്ഞിരംകുളം)",
+                "hi": "लाल दक्षिणावर्त-2 (अट्टुकल मंदिर - कंजीरमकुलम)"
+            },
+            stops: {
+                "en": ["Pappanamcode", "Balaramapuram", "Vazhikukku", "Neelimoodu", "Kanjirakulam", "Neelimoodu", "Avanakuzhy", "Attaramoola", "Mangalathukonam", "Balaramapuram", "Pappanamcode", "Karamana", "East Fort", "Attukal Temple"],
+                "ml": ["പപ്പാനംകോഡ്", "ബാലരാമപുരം", "വഴികുക്ക്", "നീലിമൂട്", "കാഞ്ഞിരംകുളം", "നീലിമൂട്", "അവനകുഴി", "അറ്റാറമൂല", "മംഗലാത്തുകോണം", "ബാലരാമപുരം", "പപ്പാനംകോഡ്", "കരമന", "ഈസ്റ്റ് ഫോർട്ട്", "അറ്റുകാൽ ക്ഷേത്രം"],
+                "hi": ["पप्पानमकोड", "बालरामपुरम", "वझिकुक्कु", "नीलिमूडु", "कंजीरमकुलम", "नीलिमूडु", "अवनकुझी", "अट्टारमूला", "मंगलाथुकोणम", "बालरामपुरम", "पप्पानमकोड", "करमना", "ईस्ट फोर्ट", "अट्टुकल मंदिर"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 5:05 AM to 10:00 PM",
+                "ml": "രാവിലെ 5:05 മുതൽ രാത്രി 10:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 5:05 बजे से रात 10:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "1A-2",
+            name: {
+                "en": "Red Anti Clockwise-2 (Pachalloor - Vizhinjam)",
+                "ml": "ചുവപ്പ് ആന്റി ക്ലോക്ക്വൈസ്-2 (പച്ചളൂർ - വിഴിഞ്ഞം)",
+                "hi": "लाल वामावर्त-2 (पचल्लूर - विझिंजम)"
+            },
+            stops: {
+                "en": ["East Fort", "Thiruvallam", "Pachalloor", "Vizhinjam", "Chappath Oottara Temple", "Vizhinjam", "Pachalloor", "Thiruvallam", "East Fort", "Pattom"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തിരുവല്ലം", "പച്ചളൂർ", "വിഴിഞ്ഞം", "ചാപ്പത്ത് ഊട്ടറ ക്ഷേത്രം", "വിഴിഞ്ഞം", "പച്ചളൂർ", "തിരുവല്ലം", "ഈസ്റ്റ് ഫോർട്ട്", "പട്ടം"],
+                "hi": ["ईस्ट फोर्ट", "तिरुवल्लम", "पचल्लूर", "विझिंजम", "चप्पथ ऊट्टारा मंदिर", "विझिंजम", "पचल्लूर", "तिरुवल्लम", "ईस्ट फोर्ट", "पट्टम"]
+            },
+            schedule: {
+                "en": "Every 45 minutes from 8:45 AM to 10:00 PM",
+                "ml": "രാവിലെ 8:45 മുതൽ രാത്രി 10:00 വരെ ഓരോ 45 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 8:45 बजे से रात 10:00 बजे तक हर 45 मिनट में"
+            },
+            
+        },
+        {
+            number: "1C-3",
+            name: {
+                "en": "Red Clockwise-3",
+                "ml": "ചുവപ്പ് ക്ലോക്ക്വൈസ്-3",
+                "hi": "लाल दक्षिणावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Ayurveda College", "Statue", "Palayam", "Vellayambalam", "Vazhuthakkadu", "Mettukada", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "വെള്ളയംബലം", "വഴുതക്കാട്", "മെട്ടുകട", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "वेल्लायम्बलम", "वझुथक्काडु", "मेट्टुकाडा", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 10 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 10 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 10 मिनट में"
+            },
+            
+        },
+        {
+            number: "1A-3",
+            name: {
+                "en": "Red Anti Clockwise-3",
+                "ml": "ചുവപ്പ് ആന്റി ക്ലോക്ക്വൈസ്-3",
+                "hi": "लाल वामावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Mettukada", "Vazhuthakkad", "Vellayambalam", "Palayam", "Statue", "Ayurveda College", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "മെട്ടുകട", "വഴുതക്കാട്", "വെള്ളയംബലം", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "मेट्टुकाडा", "वझुथक्काड", "वेल्लायम्बलम", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 10 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 10 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 10 मिनट में"
+            },
+            
+        },
+        {
+            number: "2C",
+            name: {
+                "en": "Blue Clockwise-1",
+                "ml": "നീല ക്ലോക്ക്വൈസ്-1",
+                "hi": "नीला दक्षिणावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Ayurveda College", "Uppidamoodu Bridge", "Vanchiyoor Court", "Pattoor", "General Hospital", "Palayam", "Vellayambalam", "Sasthamangalam", "Maruthumkuzhi", "Kochar Road", "Edapazhanji", "Jagathy", "Vazhuthakkadu", "Bakery Junction", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "ഉപ്പിടമൂട് പാലം", "വഞ്ചിയൂർ കോടതി", "പട്ടൂർ", "ജനറൽ ആശുപത്രി", "പാലയം", "വെള്ളയംബലം", "ശാസ്താമംഗലം", "മരുതുംകുഴി", "കോച്ചർ റോഡ്", "ഇടപഴിഞ്ഞി", "ജഗതി", "വഴുതക്കാട്", "ബേക്കറി ജംഗ്ഷൻ", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "आयुर्वेद कॉलेज", "उप्पीडामूड पुल", "वंचियूर कोर्ट", "पट्टूर", "जनरल अस्पताल", "पलायम", "वेल्लायम्बलम", "शास्तामंगलम", "मरुथुम्कुझी", "कोचर रोड", "एडापझिंजी", "जगती", "वझुथक्काडु", "बेकरी जंक्शन", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "2A",
+            name: {
+                "en": "Blue Anti Clockwise-1",
+                "ml": "നീല ആന്റി ക്ലോക്ക്വൈസ്-1",
+                "hi": "नीला वामावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Panavila", "Bakery Junction", "Vazhuthakkad", "Jagathy", "Edapazhanji", "Kochar Road", "Maruthumkuzhi", "Sasthamangalam", "Vellayambalam", "Palayam", "VJT", "General Hospital", "Pattoor", "Vanchiyoor", "Uppidamoodu Bridge", "Chettikulangara", "Over Bridge", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "പാനവില", "ബേക്കറി ജംഗ്ഷൻ", "വഴുതക്കാട്", "ജഗതി", "ഇടപഴിഞ്ഞി", "കോച്ചർ റോഡ്", "മരുതുംകുഴി", "ശാസ്താമംഗലം", "വെള്ളയംബലം", "പാലയം", "വി.ജെ.ടി", "ജനറൽ ആശുപത്രി", "പട്ടൂർ", "വഞ്ചിയൂർ", "ഉപ്പിടമൂട് പാലം", "ചെട്ടികുളങ്ങര", "ഓവർ ബ്രിഡ്ജ്", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "पानविला", "बेकरी जंक्शन", "वझुथक्काडु", "जगती", "एडापझिंजी", "कोचर रोड", "मरुथुम्कुझी", "शास्तामंगलम", "वेल्लायम्बलम", "पलायम", "वीजेटी", "जनरल अस्पताल", "पट्टूर", "वंचियूर", "उप्पीडामूड पुल", "चेट्टिकुलंगारा", "ओवर ब्रिज", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        
+        {
+            number: "2C-2",
+            name: {
+                "en": "Blue Clockwise-2",
+                "ml": "നീല ക്ലോക്ക്വൈസ്-2",
+                "hi": "नीला दक्षिणावर्त-2"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Ayurveda College", "Uppidamoodu Bridge", "Vanchiyoor Court", "Pattoor", "General Hospital", "Palayam", "Vellayambalam", "Sasthamangalam", "Maruthumkuzhi", "Kochar Road", "Edapazhanji", "Jagathy", "Vazhuthakkadu", "Bakery Junction", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "ഉപ്പിടമൂട് പാലം", "വഞ്ചിയൂർ കോടതി", "പട്ടൂർ", "ജനറൽ ആശുപത്രി", "പാലയം", "വെള്ളയംബലം", "ശാസ്താമംഗലം", "മരുതുംകുഴി", "കോച്ചർ റോഡ്", "ഇടപഴിഞ്ഞി", "ജഗതി", "വഴുതക്കാട്", "ബേക്കറി ജംഗ്ഷൻ", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "आयुर्वेद कॉलेज", "उप्पीडामूड पुल", "वंचियूर कोर्ट", "पट्टूर", "जनरल अस्पताल", "पलायम", "वेल्लायम्बलम", "शास्तामंगलम", "मरुथुम्कुझी", "कोचर रोड", "एडापझिंजी", "जगती", "वझुथक्काडु", "बेकरी जंक्शन", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "2A-3",
+            name: {
+                "en": "Blue Anti Clockwise-3",
+                "ml": "നീല ആന്റി ക്ലോക്ക്വൈസ്-3",
+                "hi": "नीला वामावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Panavila", "Bakery Junction", "Vazhuthakkad", "Jagathy", "Edapazhanji", "Kochar Road", "Maruthumkuzhi", "Sasthamangalam", "Vellayambalam", "Palayam", "VJT", "General Hospital", "Pattoor", "Vanchiyoor", "Uppidamoodu Bridge", "Chettikulangara", "Over Bridge", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "പാനവില", "ബേക്കറി ജംഗ്ഷൻ", "വഴുതക്കാട്", "ജഗതി", "ഇടപഴിഞ്ഞി", "കോച്ചർ റോഡ്", "മരുതുംകുഴി", "ശാസ്താമംഗലം", "വെള്ളയംബലം", "പാലയം", "വി.ജെ.ടി", "ജനറൽ ആശുപത്രി", "പട്ടൂർ", "വഞ്ചിയൂർ", "ഉപ്പിടമൂട് പാലം", "ചെട്ടികുളങ്ങര", "ഓവർ ബ്രിഡ്ജ്", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "पानविला", "बेकरी जंक्शन", "वझुथक्काडु", "जगती", "एडापझिंजी", "कोचर रोड", "मरुथुम्कुझी", "शास्तामंगलम", "वेल्लायम्बलम", "पलायम", "वीजेटी", "जनरल अस्पताल", "पट्टूर", "वंचियूर", "उप्पीडामूड पुल", "चेट्टिकुलंगारा", "ओवर ब्रिज", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-1",
+            name: {
+                "en": "Green Clockwise-1",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-1",
+                "hi": "हरा दक्षिणावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhappally", "Fort Hospital", "Uppidamoodu Bridge", "Petah Pallimukku", "Kannamoola", "Medical College", "Murinja Palam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "मेडिकल कॉलेज", "मुरिंजा पलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7A-1",
+            name: {
+                "en": "Green Anti Clockwise-1",
+                "ml": "പച്ച ആന്റി ക്ലോക്ക്വൈസ്-1",
+                "hi": "हरा वामावर्त-1"
+            },
+            stops: {
+                "en": ["Thampanoor", "Ayurveda College", "Statue", "Palayam", "PMG", "Vikas Bhavan Depot", "Law College Junction", "Varambassery", "Mirandra Junction", "Vadayakkadu", "Muluvana Junction", "Gowreesha Hospital", "Pottakuzhy", "Murinjapalam", "Medical College", "Kumarapuram", "Kannamoola", "Petah Pallimukku", "Uppidamoodu Bridge", "Fort Hospital", "Vazhapally", "Transport Bhavan", "East Fort"],
+                "ml": ["തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "ലോ കോളേജ് ജംഗ്ഷൻ", "വരമ്പാശേരി", "മിരാന്ദ ജംഗ്ഷൻ", "വടയക്കാട്", "മുളുവന ജംഗ്ഷൻ", "ഗൗരീശ ആശുപത്രി", "പൊട്ടകുഴി", "മുരിഞ്ഞപ്പാലം", "മെഡിക്കൽ കോളേജ്", "കുമാരപുരം", "കണ്ണമൂല", "പേട പള്ളിമുക്ക്", "ഉപ്പിടമൂട് പാലം", "ഫോർട്ട് ആശുപത്രി", "വഴപ്പള്ളി", "ട്രാൻസ്പോർട്ട് ഭവൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "पीएमजी", "विकास भवन डिपो", "लॉ कॉलेज जंक्शन", "वरम्बास्सेरी", "मिरंदा जंक्शन", "वडयक्काडु", "मुलुवाना जंक्शन", "गौरीशा अस्पताल", "पोट्टाकुझी", "मुरिंजापलम", "मेडिकल कॉलेज", "कुमारपुरम", "कन्नामूला", "पेटा पल्लिमुक्कु", "उप्पीडामूड पुल", "फोर्ट अस्पताल", "वझप्पल्ली", "ट्रांसपोर्ट भवन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-2",
+            name: {
+                "en": "Green Clockwise-2",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-2",
+                "hi": "हरा दक्षिणावर्त-2"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhappally", "Fort Hospital", "Uppidamoodu Bridge", "Petah Pallimukku", "Kannamoola", "Medical College", "Murinja Palam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "मेडिकल कॉलेज", "मुरिंजा पलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7A-2",
+            name: {
+                "en": "Green Anti Clockwise-2",
+                "ml": "പച്ച ആന്റി ക്ലോക്ക്വൈസ്-2",
+                "hi": "हरा वामावर्त-2"
+            },
+            stops: {
+                "en": ["Thampanoor", "Ayurveda College", "Statue", "Palayam", "PMG", "Vikas Bhavan Depot", "Law College Junction", "Varambassery", "Mirandra Junction", "Vadayakkadu", "Muluvana Junction", "Gowreesha Hospital", "Pottakuzhy", "Murinjapalam", "Medical College", "Kumarapuram", "Kannamoola", "Petah Pallimukku", "Uppidamoodu Bridge", "Fort Hospital", "Vazhapally", "Transport Bhavan", "East Fort"],
+                "ml": ["തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "ലോ കോളേജ് ജംഗ്ഷൻ", "വരമ്പാശേരി", "മിരാന്ദ ജംഗ്ഷൻ", "വടയക്കാട്", "മുളുവന ജംഗ്ഷൻ", "ഗൗരീശ ആശുപത്രി", "പൊട്ടകുഴി", "മുരിഞ്ഞപ്പാലം", "മെഡിക്കൽ കോളേജ്", "കുമാരപുരം", "കണ്ണമൂല", "പേട പള്ളിമുക്ക്", "ഉപ്പിടമൂട് പാലം", "ഫോർട്ട് ആശുപത്രി", "വഴപ്പള്ളി", "ട്രാൻസ്പോർട്ട് ഭവൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "पीएमजी", "विकास भवन डिपो", "लॉ कॉलेज जंक्शन", "वरम्बास्सेरी", "मिरंदा जंक्शन", "वडयक्काडु", "मुलुवाना जंक्शन", "गौरीशा अस्पताल", "पोट्टाकुझी", "मुरिंजापलम", "मेडिकल कॉलेज", "कुमारपुरम", "कन्नामूला", "पेटा पल्लिमुक्कु", "उप्पीडामूड पुल", "फोर्ट अस्पताल", "वझप्पल्ली", "ट्रांसपोर्ट भवन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-3",
+            name: {
+                "en": "Green Clockwise-3",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-3",
+                "hi": "हरा दक्षिणावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhapally", "Fort Hospital", "Uppidamoodu Bridge", "Pettah Pallimukku", "Kannamoola", "Kumarapuram", "Medical College", "Murinjapalam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Niyamasabha", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "കുമാരപുരം", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "നിയമസഭ", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "कुमारपुरम", "मेडिकल कॉलेज", "मुरिंजापलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "नियमसभा", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        
+        {
+            number: "2C-2",
+            name: {
+                "en": "Blue Clockwise-2",
+                "ml": "നീല ക്ലോക്ക്വൈസ്-2",
+                "hi": "नीला दक्षिणावर्त-2"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Ayurveda College", "Uppidamoodu Bridge", "Vanchiyoor Court", "Pattoor", "General Hospital", "Palayam", "Vellayambalam", "Sasthamangalam", "Maruthumkuzhi", "Kochar Road", "Edapazhanji", "Jagathy", "Vazhuthakkadu", "Bakery Junction", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "ഉപ്പിടമൂട് പാലം", "വഞ്ചിയൂർ കോടതി", "പട്ടൂർ", "ജനറൽ ആശുപത്രി", "പാലയം", "വെള്ളയംബലം", "ശാസ്താമംഗലം", "മരുതുംകുഴി", "കോച്ചർ റോഡ്", "ഇടപഴിഞ്ഞി", "ജഗതി", "വഴുതക്കാട്", "ബേക്കറി ജംഗ്ഷൻ", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "आयुर्वेद कॉलेज", "उप्पीडामूड पुल", "वंचियूर कोर्ट", "पट्टूर", "जनरल अस्पताल", "पलायम", "वेल्लायम्बलम", "शास्तामंगलम", "मरुथुम्कुझी", "कोचर रोड", "एडापझिंजी", "जगती", "वझुथक्काडु", "बेकरी जंक्शन", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "2A-3",
+            name: {
+                "en": "Blue Anti Clockwise-3",
+                "ml": "നീല ആന്റി ക്ലോക്ക്വൈസ്-3",
+                "hi": "नीला वामावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Thampanoor", "Panavila", "Bakery Junction", "Vazhuthakkad", "Jagathy", "Edapazhanji", "Kochar Road", "Maruthumkuzhi", "Sasthamangalam", "Vellayambalam", "Palayam", "VJT", "General Hospital", "Pattoor", "Vanchiyoor", "Uppidamoodu Bridge", "Chettikulangara", "Over Bridge", "Thampanoor", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "പാനവില", "ബേക്കറി ജംഗ്ഷൻ", "വഴുതക്കാട്", "ജഗതി", "ഇടപഴിഞ്ഞി", "കോച്ചർ റോഡ്", "മരുതുംകുഴി", "ശാസ്താമംഗലം", "വെള്ളയംബലം", "പാലയം", "വി.ജെ.ടി", "ജനറൽ ആശുപത്രി", "പട്ടൂർ", "വഞ്ചിയൂർ", "ഉപ്പിടമൂട് പാലം", "ചെട്ടികുളങ്ങര", "ഓവർ ബ്രിഡ്ജ്", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "थम्पानूर", "पानविला", "बेकरी जंक्शन", "वझुथक्काडु", "जगती", "एडापझिंजी", "कोचर रोड", "मरुथुम्कुझी", "शास्तामंगलम", "वेल्लायम्बलम", "पलायम", "वीजेटी", "जनरल अस्पताल", "पट्टूर", "वंचियूर", "उप्पीडामूड पुल", "चेट्टिकुलंगारा", "ओवर ब्रिज", "थम्पानूर", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 15 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 15 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 15 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-1",
+            name: {
+                "en": "Green Clockwise-1",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-1",
+                "hi": "हरा दक्षिणावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhappally", "Fort Hospital", "Uppidamoodu Bridge", "Petah Pallimukku", "Kannamoola", "Medical College", "Murinja Palam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "मेडिकल कॉलेज", "मुरिंजा पलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7A-1",
+            name: {
+                "en": "Green Anti Clockwise-1",
+                "ml": "പച്ച ആന്റി ക്ലോക്ക്വൈസ്-1",
+                "hi": "हरा वामावर्त-1"
+            },
+            stops: {
+                "en": ["Thampanoor", "Ayurveda College", "Statue", "Palayam", "PMG", "Vikas Bhavan Depot", "Law College Junction", "Varambassery", "Mirandra Junction", "Vadayakkadu", "Muluvana Junction", "Gowreesha Hospital", "Pottakuzhy", "Murinjapalam", "Medical College", "Kumarapuram", "Kannamoola", "Petah Pallimukku", "Uppidamoodu Bridge", "Fort Hospital", "Vazhapally", "Transport Bhavan", "East Fort"],
+                "ml": ["തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "ലോ കോളേജ് ജംഗ്ഷൻ", "വരമ്പാശേരി", "മിരാന്ദ ജംഗ്ഷൻ", "വടയക്കാട്", "മുളുവന ജംഗ്ഷൻ", "ഗൗരീശ ആശുപത്രി", "പൊട്ടകുഴി", "മുരിഞ്ഞപ്പാലം", "മെഡിക്കൽ കോളേജ്", "കുമാരപുരം", "കണ്ണമൂല", "പേട പള്ളിമുക്ക്", "ഉപ്പിടമൂട് പാലം", "ഫോർട്ട് ആശുപത്രി", "വഴപ്പള്ളി", "ട്രാൻസ്പോർട്ട് ഭവൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "पीएमजी", "विकास भवन डिपो", "लॉ कॉलेज जंक्शन", "वरम्बास्सेरी", "मिरंदा जंक्शन", "वडयक्काडु", "मुलुवाना जंक्शन", "गौरीशा अस्पताल", "पोट्टाकुझी", "मुरिंजापलम", "मेडिकल कॉलेज", "कुमारपुरम", "कन्नामूला", "पेटा पल्लिमुक्कु", "उप्पीडामूड पुल", "फोर्ट अस्पताल", "वझप्पल्ली", "ट्रांसपोर्ट भवन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-2",
+            name: {
+                "en": "Green Clockwise-2",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-2",
+                "hi": "हरा दक्षिणावर्त-2"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhappally", "Fort Hospital", "Uppidamoodu Bridge", "Petah Pallimukku", "Kannamoola", "Medical College", "Murinja Palam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "मेडिकल कॉलेज", "मुरिंजा पलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7A-2",
+            name: {
+                "en": "Green Anti Clockwise-2",
+                "ml": "പച്ച ആന്റി ക്ലോക്ക്വൈസ്-2",
+                "hi": "हरा वामावर्त-2"
+            },
+            stops: {
+                "en": ["Thampanoor", "Ayurveda College", "Statue", "Palayam", "PMG", "Vikas Bhavan Depot", "Law College Junction", "Varambassery", "Mirandra Junction", "Vadayakkadu", "Muluvana Junction", "Gowreesha Hospital", "Pottakuzhy", "Murinjapalam", "Medical College", "Kumarapuram", "Kannamoola", "Petah Pallimukku", "Uppidamoodu Bridge", "Fort Hospital", "Vazhapally", "Transport Bhavan", "East Fort"],
+                "ml": ["തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "ലോ കോളേജ് ജംഗ്ഷൻ", "വരമ്പാശേരി", "മിരാന്ദ ജംഗ്ഷൻ", "വടയക്കാട്", "മുളുവന ജംഗ്ഷൻ", "ഗൗരീശ ആശുപത്രി", "പൊട്ടകുഴി", "മുരിഞ്ഞപ്പാലം", "മെഡിക്കൽ കോളേജ്", "കുമാരപുരം", "കണ്ണമൂല", "പേട പള്ളിമുക്ക്", "ഉപ്പിടമൂട് പാലം", "ഫോർട്ട് ആശുപത്രി", "വഴപ്പള്ളി", "ട്രാൻസ്പോർട്ട് ഭവൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "पीएमजी", "विकास भवन डिपो", "लॉ कॉलेज जंक्शन", "वरम्बास्सेरी", "मिरंदा जंक्शन", "वडयक्काडु", "मुलुवाना जंक्शन", "गौरीशा अस्पताल", "पोट्टाकुझी", "मुरिंजापलम", "मेडिकल कॉलेज", "कुमारपुरम", "कन्नामूला", "पेटा पल्लिमुक्कु", "उप्पीडामूड पुल", "फोर्ट अस्पताल", "वझप्पल्ली", "ट्रांसपोर्ट भवन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        {
+            number: "7C-3",
+            name: {
+                "en": "Green Clockwise-3",
+                "ml": "പച്ച ക്ലോക്ക്വൈസ്-3",
+                "hi": "हरा दक्षिणावर्त-3"
+            },
+            stops: {
+                "en": ["East Fort", "Transport Bhavan", "Vazhapally", "Fort Hospital", "Uppidamoodu Bridge", "Pettah Pallimukku", "Kannamoola", "Kumarapuram", "Medical College", "Murinjapalam", "Pottakuzhy", "Thekkumoodu", "Anadiyil Hospital", "Law College Junction", "Vikas Bhavan Depot", "PMG", "Niyamasabha", "Palayam", "Statue", "Ayurveda College", "Thampanoor"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "ട്രാൻസ്പോർട്ട് ഭവൻ", "വഴപ്പള്ളി", "ഫോർട്ട് ആശുപത്രി", "ഉപ്പിടമൂട് പാലം", "പേട പള്ളിമുക്ക്", "കണ്ണമൂല", "കുമാരപുരം", "മെഡിക്കൽ കോളേജ്", "മുരിഞ്ഞപ്പാലം", "പൊട്ടകുഴി", "തെക്കുമൂട്", "ആനടിയിൽ ആശുപത്രി", "ലോ കോളേജ് ജംഗ്ഷൻ", "വികാസ് ഭവൻ ഡിപ്പോ", "പി.എം.ജി", "നിയമസഭ", "പാലയം", "സ്റ്റാച്യൂ", "ആയുർവേദ കോളേജ്", "തമ്പാനൂർ"],
+                "hi": ["ईस्ट फोर्ट", "ट्रांसपोर्ट भवन", "वझप्पल्ली", "फोर्ट अस्पताल", "उप्पीडामूड पुल", "पेटा पल्लिमुक्कु", "कन्नामूला", "कुमारपुरम", "मेडिकल कॉलेज", "मुरिंजापलम", "पोट्टाकुझी", "थेक्कुमूडु", "आनदियिल अस्पताल", "लॉ कॉलेज जंक्शन", "विकास भवन डिपो", "पीएमजी", "नियमसभा", "पलायम", "मूर्ति", "आयुर्वेद कॉलेज", "थम्पानूर"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+            },
+            
+        },
+        
+    {
+        number: "7A-3",
+        name: {
+            "en": "Green Anti Clockwise-3",
+            "ml": "പച്ച ആന്റി ക്ലോക്ക്വൈസ്-3",
+            "hi": "हरा वामावर्त-3"
+        },
+        stops: {
+            "en": ["Thampanoor", "Ayurveda College", "Statue", "Palayam", "PMG", "Vikas Bhavan Depot", "Law College Junction", "Varambassery", "Mirandra Junction", "Vadayakkadu", "Muluvena Junction", "Gowreesha Hospital", "Pottakuzhy", "Murinjapalam", "Medical College", "Kumarapuram", "Kannamoola", "Petah Pallimukku", "Uppidamoodu Bridge", "Fort Hospital", "Vazhappally", "Transport Bhavan", "East Fort"],
+            "ml": ["തമ്പാനൂർ", "ആയുർവേദ കോളേജ്", "സ്റ്റാച്യൂ", "പാലയം", "പി.എം.ജി", "വികാസ് ഭവൻ ഡിപ്പോ", "ലോ കോളേജ് ജംഗ്ഷൻ", "വരമ്പശ്ശേരി", "മിറാണ്ട ജംഗ്ഷൻ", "വടയക്കാട്", "മുളുവേന ജംഗ്ഷൻ", "ഗൗരീഷ ആശുപത്രി", "പൊട്ടകുഴി", "മുരിഞ്ഞപ്പാലം", "മെഡിക്കൽ കോളേജ്", "കുമാരപുരം", "കണ്ണമൂല", "പേട പള്ളിമുക്ക്", "ഉപ്പിടമൂട് പാലം", "ഫോർട്ട് ആശുപത്രി", "വഴപ്പള്ളി", "ട്രാൻസ്പോർട്ട് ഭവൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["थम्पानूर", "आयुर्वेद कॉलेज", "मूर्ति", "पलायम", "पीएमजी", "विकास भवन डिपो", "लॉ कॉलेज जंक्शन", "वरम्बस्सेरी", "मिरान्डा जंक्शन", "वडयक्काडु", "मुलुवेना जंक्शन", "गौरीषा अस्पताल", "पोट्टाकुझी", "मुरिंजा पलम", "मेडिकल कॉलेज", "कुमारपुरम", "कन्नामूला", "पेटा पल्लिमुक्कु", "उप्पीडामूड पुल", "फोर्ट अस्पताल", "वझप्पल्ली", "ट्रांसपोर्ट भवन", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6C-1",
+        name: {
+            "en": "Brown Clockwise-1",
+            "ml": "ബ്രൗൺ ക്ലോക്ക്വൈസ്-1",
+            "hi": "भूरा दक्षिणावर्त-1"
+        },
+        stops: {
+            "en": ["East Fort", "Thampanoor", "Chenthitta", "Kannettukummukku", "Jagathy", "Pangode Market", "Sasthamangalam", "Maruthamkuzhi", "PTP Nagar", "Vettamukku", "Elippode", "Valiyavila", "Thirumala", "Poojappura", "Kunchalumoodu", "Karamana", "Killippalam", "Attakulangara Road", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ചെന്തിട്ട", "കണ്ണെട്ടുകുമ്മുക്ക്", "ജഗതി", "പാങ്കോട് മാർക്കറ്റ്", "ശാസ്താമംഗലം", "മരുതംകുഴി", "പി.ടി.പി നഗർ", "വെട്ടമുക്ക്", "എളിപ്പോട്", "വലിയവിള", "തിരുമല", "പൂജാപ്പുര", "കുൻചാലുമൂട്", "കരമന", "കിള്ളിപ്പലം", "അട്ടകുളങ്ങര റോഡ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "थम्पानूर", "चेंथिट्टा", "कन्नेट्टुकुम्मुक्कु", "जगथी", "पांगोड मार्केट", "शास्तामंगलम", "मरुथमकुझी", "पीटीपी नगर", "वेट्टामुक्कु", "एलिप्पोड", "वलियाविला", "थिरुमला", "पूजाप्पुरा", "कुन्चलुमूडु", "करमना", "किल्लिपलम", "अट्टाकुलंगारा रोड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    
+    {
+        number: "6A-1",
+        name: {
+            "en": "Brown Anti Clockwise-1",
+            "ml": "ബ്രൗൺ ആന്റി ക്ലോക്ക്വൈസ്-1",
+            "hi": "भूरा वामावर्त-1"
+        },
+        stops: {
+            "en": ["East Fort", "Attakulangara Road", "Killippalam", "Karamana", "Kunchalumoodu", "Poojappura", "Thirumala", "Valiyavila", "Elippodu", "Vettamukku", "PTP Nagar", "Maruthamkuzhi", "Sasthamangalam", "Pangode Market", "Jagathy", "Kannettumukku", "Chenthitta", "Thampanoor", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "അട്ടകുളങ്ങര റോഡ്", "കിള്ളിപ്പലം", "കരമന", "കുൻചാലുമൂട്", "പൂജാപ്പുര", "തിരുമല", "വലിയവിള", "എളിപ്പോട്", "വെട്ടമുക്ക്", "പി.ടി.പി നഗർ", "മരുതംകുഴി", "ശാസ്താമംഗലം", "പാങ്കോട് മാർക്കറ്റ്", "ജഗതി", "കണ്ണെട്ടുമുക്ക്", "ചെന്തിട്ട", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "अट्टाकुलंगारा रोड", "किल्लिपलम", "करमना", "कुन्चलुमूडु", "पूजाप्पुरा", "थिरुमला", "वलियाविला", "एलिप्पोडु", "वेट्टामुक्कु", "पीटीपी नगर", "मरुथमकुझी", "शास्तामंगलम", "पांगोड मार्केट", "जगथी", "कन्नेट्टुमुक्कु", "चेंथिट्टा", "थम्पानूर", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6C-2",
+        name: {
+            "en": "Brown Clockwise-2",
+            "ml": "ബ്രൗൺ ക്ലോക്ക്വൈസ്-2",
+            "hi": "भूरा दक्षिणावर्त-2"
+        },
+        stops: {
+            "en": ["East Fort", "Thampanoor", "Chenthitta", "Kannettumukku", "Jagathy", "Pangode Market", "Sasthamangalam", "Maruthamkuzhi", "PTP Nagar", "Vettamukku", "Elippode", "Valiyavila", "Thirumala", "Poojappura", "Kunchalumoodu", "Karamana", "Killippalam", "Attakulangara Road", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ചെന്തിട്ട", "കണ്ണെട്ടുമുക്ക്", "ജഗതി", "പാങ്കോട് മാർക്കറ്റ്", "ശാസ്താമംഗലം", "മരുതംകുഴി", "പി.ടി.പി നഗർ", "വെട്ടമുക്ക്", "എളിപ്പോട്", "വലിയവിള", "തിരുമല", "പൂജാപ്പുര", "കുൻചാലുമൂട്", "കരമന", "കിള്ളിപ്പലം", "അട്ടകുളങ്ങര റോഡ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "थम्पानूर", "चेंथिट्टा", "कन्नेट्टुमुक्कु", "जगथी", "पांगोड मार्केट", "शास्तामंगलम", "मरुथमकुझी", "पीटीपी नगर", "वेट्टामुक्कु", "एलिप्पोड", "वलियाविला", "थिरुमला", "पूजाप्पुरा", "कुन्चलुमूडु", "करमना", "किल्लिपलम", "अट्टाकुलंगारा रोड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6A-2",
+        name: {
+            "en": "Brown Anti Clockwise-2",
+            "ml": "ബ്രൗൺ ആന്റി ക്ലോക്ക്വൈസ്-2",
+            "hi": "भूरा वामावर्त-2"
+        },
+        stops: {
+            "en": ["East Fort", "Attakulangara Road", "Killippalam", "Karamana", "Kunchalumoodu", "Poojappura", "Thirumala", "Valiyavila", "Elippodu", "Vettamukku", "PTP Nagar", "Maruthamkuzhi", "Sasthamangalam", "Pangode Market", "Jagathy", "Kannettumukku", "Chenthitta", "Thampanoor", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "അട്ടകുളങ്ങര റോഡ്", "കിള്ളിപ്പലം", "കരമന", "കുൻചാലുമൂട്", "പൂജാപ്പുര", "തിരുമല", "വലിയവിള", "എളിപ്പോട്", "വെട്ടമുക്ക്", "പി.ടി.പി നഗർ", "മരുതംകുഴി", "ശാസ്താമംഗലം", "പാങ്കോട് മാർക്കറ്റ്", "ജഗതി", "കണ്ണെട്ടുമുക്ക്", "ചെന്തിട്ട", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "अट्टाकुलंगारा रोड", "किल्लिपलम", "करमना", "कुन्चलुमूडु", "पूजाप्पुरा", "थिरुमला", "वलियाविला", "एलिप्पोडु", "वेट्टामुक्कु", "पीटीपी नगर", "मरुथमकुझी", "शास्तामंगलम", "पांगोड मार्केट", "जगथी", "कन्नेट्टुमुक्कु", "चेंथिट्टा", "थम्पानूर", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6C-3",
+        name: {
+            "en": "Brown Clockwise-3",
+            "ml": "ബ്രൗൺ ക്ലോക്ക്വൈസ്-3",
+            "hi": "भूरा दक्षिणावर्त-3"
+        },
+        stops: {
+            "en": ["East Fort", "Thampanoor", "Chenthitta", "Kannettumukku", "Jagathy", "Pangode Market", "Sasthamangalam", "Maruthamkuzhi", "PTP Nagar", "Vettamukku", "Elippode", "Valiyavila", "Thirumala", "Poojappura", "Kunchalumoodu", "Karamana", "Killippalam", "Attakulangara Road", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ചെന്തിട്ട", "കണ്ണെട്ടുമുക്ക്", "ജഗതി", "പാങ്കോട് മാർക്കറ്റ്", "ശാസ്താമംഗലം", "മരുതംകുഴി", "പി.ടി.പി നഗർ", "വെട്ടമുക്ക്", "എളിപ്പോട്", "വലിയവിള", "തിരുമല", "പൂജാപ്പുര", "കുൻചാലുമൂട്", "കരമന", "കിള്ളിപ്പലം", "അട്ടകുളങ്ങര റോഡ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "थम्पानूर", "चेंथिट्टा", "कन्नेट्टुमुक्कु", "जगथी", "पांगोड मार्केट", "शास्तामंगलम", "मरुथमकुझी", "पीटीपी नगर", "वेट्टामुक्कु", "एलिप्पोड", "वलियाविला", "थिरुमला", "पूजाप्पुरा", "कुन्चलुमूडु", "करमना", "किल्लिपलम", "अट्टाकुलंगारा रोड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6A-3",
+        name: {
+            "en": "Brown Anti Clockwise-3",
+            "ml": "ബ്രൗൺ ആന്റി ക്ലോക്ക്വൈസ്-3",
+            "hi": "भूरा वामावर्त-3"
+        },
+        stops: {
+            "en": ["East Fort", "Attakulangara Road", "Killippalam", "Karamana", "Kunchalumoodu", "Poojappura", "Thirumala", "Valiyavila", "Elippodu", "Vettamukku", "PTP Nagar", "Maruthamkuzhi", "Sasthamangalam", "Pangode Market", "Jagathy", "Kannettumukku", "Chenthitta", "Thampanoor", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "അട്ടകുളങ്ങര റോഡ്", "കിള്ളിപ്പലം", "കരമന", "കുൻചാലുമൂട്", "പൂജാപ്പുര", "തിരുമല", "വലിയവിള", "എളിപ്പോട്", "വെട്ടമുക്ക്", "പി.ടി.പി നഗർ", "മരുതംകുഴി", "ശാസ്താമംഗലം", "പാങ്കോട് മാർക്കറ്റ്", "ജഗതി", "കണ്ണെട്ടുമുക്ക്", "ചെന്തിട്ട", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "अट्टाकुलंगारा रोड", "किल्लिपलम", "करमना", "कुन्चलुमूडु", "पूजाप्पुरा", "थिरुमला", "वलियाविला", "एलिप्पोडु", "वेट्टामुक्कु", "पीटीपी नगर", "मरुथमकुझी", "शास्तामंगलम", "पांगोड मार्केट", "जगथी", "कन्नेट्टुमुक्कु", "चेंथिट्टा", "थम्पानूर", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "6C-5",
+        name: {
+            "en": "Brown Clockwise-5",
+            "ml": "ബ്രൗൺ ക്ലോക്ക്വൈസ്-5",
+            "hi": "भूरा दक्षिणावर्त-5"
+        },
+        stops: {
+            "en": ["East Fort", "Thampanoor", "Chenthitta", "Kannettumukku", "Jagathy", "Pangode Market", "Sasthamangalam", "Maruthamkuzhi", "PTP Nagar", "Vettamukku", "Elippode", "Valiyavila", "Thirumala", "Poojappura", "Kunchalumoodu", "Karamana", "Killippalam", "Attakulangara Road", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "തമ്പാനൂർ", "ചെന്തിട്ട", "കണ്ണെട്ടുമുക്ക്", "ജഗതി", "പാങ്കോട് മാർക്കറ്റ്", "ശാസ്താമംഗലം", "മരുതംകുഴി", "പി.ടി.പി നഗർ", "വെട്ടമുക്ക്", "എളിപ്പോട്", "വലിയവിള", "തിരുമല", "പൂജാപ്പുര", "കുൻചാലുമൂട്", "കരമന", "കിള്ളിപ്പലം", "അട്ടകുളങ്ങര റോഡ്", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "थम्पानूर", "चेंथिट्टा", "कन्नेट्टुमुक्कु", "जगथी", "पांगोड मार्केट", "शास्तामंगलम", "मरुथमकुझी", "पीटीपी नगर", "वेट्टामुक्कु", "एलिप्पोड", "वलियाविला", "थिरुमला", "पूजाप्पुरा", "कुन्चलुमूडु", "करमना", "किल्लिपलम", "अट्टाकुलंगारा रोड", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    
+    {
+        number: "6A-4",
+        name: {
+            "en": "Brown Anti Clockwise-4",
+            "ml": "ബ്രൗൺ ആന്റി ക്ലോക്ക്വൈസ്-4",
+            "hi": "भूरा वामावर्त-4"
+        },
+        stops: {
+            "en": ["East Fort", "Attakulangara Road", "Killippalam", "Karamana", "Kunchalumoodu", "Poojappura", "Thirumala", "Valaiyavila", "Elippodu", "Vettamukku", "PTP Nagar", "Maruthamkuzhi", "Sasthamangalam", "Pangode Market", "Jagathy", "Kannettumukku", "Chenthitta", "Thampanoor", "East Fort"],
+            "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "അട്ടകുളങ്ങര റോഡ്", "കിള്ളിപ്പലം", "കരമന", "കുൻചാലുമൂട്", "പൂജാപ്പുര", "തിരുമല", "വലായിവിള", "എളിപ്പോട്", "വെട്ടമുക്ക്", "പി.ടി.പി നഗർ", "മരുതംകുഴി", "ശാസ്താമംഗലം", "പാങ്കോട് മാർക്കറ്റ്", "ജഗതി", "കണ്ണെട്ടുമുക്ക്", "ചെന്തിട്ട", "തമ്പാനൂർ", "ഈസ്റ്റ് ഫോർട്ട്"],
+            "hi": ["ईस्ट फोर्ट", "अट्टाकुलंगारा रोड", "किल्लिपलम", "करमना", "कुन्चलुमूडु", "पूजाप्पुरा", "थिरुमला", "वलैयाविला", "एलिप्पोडु", "वेट्टामुक्कु", "पीटीपी नगर", "मरुथमकुझी", "शास्तामंगलम", "पांगोड मार्केट", "जगथी", "कन्नेट्टुमुक्कु", "चेंथिट्टा", "थम्पानूर", "ईस्ट फोर्ट"]
+        },
+        schedule: {
+            "en": "Every 20 minutes from 6:00 AM to 10:00 PM",
+            "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+            "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 20 मिनट में"
+        },
+        
+    },
+    {
+        number: "Air-Rail",
+        name: {
+            "en": "Air-Rail",
+            "ml": "എയർ-റെയിൽ",
+            "hi": "एयर-रेल"
+        },
+        stops: {
+            "en": ["TVM Railway Station", "Statue", "Palayam", "General Hospital", "Pettah", "Chackai", "International Airport", "All Saints", "Shangumukham", "Domestic Airport", "Valiyathura", "Bangladesh Colony", "Mukkollakkal Temple", "Manacaud", "East Fort", "TVM Railway Station"],
+            "ml": ["ടിവിഎം റെയിൽവേ സ്റ്റേഷൻ", "സ്റ്റാച്യു", "പാലയം", "ജനറൽ ആശുപത്രി", "പെട്ട", "ചക്കൈ", "ഇന്റർനാഷണൽ എയർപോർട്ട്", "ഓൾ സെയിന്റ്സ്", "ശങ്കുമുഖം", "ഡൊമസ്റ്റിക് എയർപോർട്ട്", "വലിയതുറ", "ബംഗ്ലാദേശ് കോളനി", "മുക്കൊള്ളക്കൽ ക്ഷേത്രം", "മനക്കാവ്", "ഈസ്റ്റ് ഫോർട്ട്", "ടിവിഎം റെയിൽവേ സ്റ്റേഷൻ"],
+            "hi": ["टीवीएम रेलवे स्टेशन", "स्टैच्यू", "पलायम", "जनरल अस्पताल", "पेट्टा", "चककाई", "अंतरराष्ट्रीय हवाई अड्डा", "ऑल सेंट्स", "शंगुमुखम", "घरेलू हवाई अड्डा", "वलियाथुरा", "बांग्लादेश कॉलोनी", "मुक्कोल्लक्कल मंदिर", "मनाकाउड", "ईस्ट फोर्ट", "टीवीएम रेलवे स्टेशन"]
+        },
+        schedule: {
+            "en": "06:30 AM departure",
+            "ml": "രാവിലെ 06:30 പുറപ്പെടുന്നു",
+            "hi": "सुबह 06:30 प्रस्थान"
+        },
+        
+    },
+    {
+        number: "Air-Rail",
+        name: {
+            "en": "Air-Rail",
+            "ml": "എയർ-റെയിൽ",
+            "hi": "एयर-रेल"
+        },
+        stops: {
+            "en": ["TVM Railway Station", "Statue", "Palayam", "General Hospital", "Pettah", "Chackai", "International Airport", "All Saints", "Shangumukham", "Domestic Airport", "Valiyathura", "Bangladesh Colony", "Mukkollakkal Temple", "Manacaud", "East Fort", "TVM Railway Station"],
+            "ml": ["ടിവിഎം റെയിൽവേ സ്റ്റേഷൻ", "സ്റ്റാച്യു", "പാലയം", "ജനറൽ ആശുപത്രി", "പെട്ട", "ചക്കൈ", "ഇന്റർനാഷണൽ എയർപോർട്ട്", "ഓൾ സെയിന്റ്സ്", "ശങ്കുമുഖം", "ഡൊമസ്റ്റിക് എയർപോർട്ട്", "വലിയതുറ", "ബംഗ്ലാദേശ് കോളനി", "മുക്കൊള്ളക്കൽ ക്ഷേത്രം", "മനക്കാവ്", "ഈസ്റ്റ് ഫോർട്ട്", "ടിവിഎം റെയിൽവേ സ്റ്റേഷൻ"],
+            "hi": ["टीवीएम रेलवे स्टेशन", "स्टैच्यू", "पलायम", "जनरल अस्पताल", "पेट्टा", "चककाई", "अंतरराष्ट्रीय हवाई अड्डा", "ऑल सेंट्स", "शंगुमुखम", "घरेलू हवाई अड्डा", "वलियाथुरा", "बांग्लादेश कॉलोनी", "मुक्कोल्लक्कल मंदिर", "मनाकाउड", "ईस्ट फोर्ट", "टीवीएम रेलवे स्टेशन"]
+        },
+        schedule: {
+            "en": "07:10 AM departure",
+            "ml": "രാവിലെ 07:10 പുറപ്പെടുന്നു",
+            "hi": "सुबह 07:10 प्रस्थान"
+        },
+        
+    },
+    
+        {
+            number: "9C-1",
+            name: {
+                "en": "Orange Clockwise-1",
+                "ml": "ഓറഞ്ച് ക്ലോക്ക്വൈസ്-1",
+                "hi": "नारंगी दक्षिणावर्त-1"
+            },
+            stops: {
+                "en": ["East Fort", "Manacaud", "Mukkolakkal Temple", "Bangadesh Colony", "Valiyathura", "Sanghumugham", "All Saints", "Chakkai", "Pettah", "General Hospital", "Palayam", "Statue", "Trivandrum Railway Station", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ ക്ഷേത്രം", "ബംഗ്ലാദേശ് കോളനി", "വലിയതുറ", "സംഘമുഖം", "ഓൾ സെയിന്റ്സ്", "ചക്കായി", "പേട്ട", "ജനറൽ ആശുപത്രി", "പാലയം", "സ്റ്റാച്യൂ", "തിരുവനന്തപുരം റെയിൽവേ സ്റ്റേഷൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल मंदिर", "बांग्लादेश कॉलोनी", "वलियथुरा", "संघमुखम", "ऑल सेंट्स", "चक्कई", "पेट्टाह", "जनरल अस्पताल", "पलायम", "मूर्ति", "त्रिवेंद्रम रेलवे स्टेशन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "9A-1",
+            name: {
+                "en": "Orange Anti Clockwise-1",
+                "ml": "ഓറഞ്ച് ആന്റി ക്ലോക്ക്വൈസ്-1",
+                "hi": "नारंगी वामावर्त-1"
+            },
+            stops: {
+                "en": ["Trivandrum Railway Station", "Statue", "Palayam", "General Hospital", "Pettah", "Chakkai", "All Saints", "Sanghumugham", "Valiyathura", "Bangadesh Colony", "Mukkolakkal Temple", "Manacaud"],
+                "ml": ["തിരുവനന്തപുരം റെയിൽവേ സ്റ്റേഷൻ", "സ്റ്റാച്യൂ", "പാലയം", "ജനറൽ ആശുപത്രി", "പേട്ട", "ചക്കായി", "ഓൾ സെയിന്റ്സ്", "സംഘമുഖം", "വലിയതുറ", "ബംഗ്ലാദേശ് കോളനി", "മുക്കോലക്കൽ ക്ഷേത്രം", "മണക്കാട്"],
+                "hi": ["त्रिवेंद्रम रेलवे स्टेशन", "मूर्ति", "पलायम", "जनरल अस्पताल", "पेट्टाह", "चक्कई", "ऑल सेंट्स", "संघमुखम", "वलियथुरा", "बांग्लादेश कॉलोनी", "मुक्कोलक्कल मंदिर", "मनकाड"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "9C-2",
+            name: {
+                "en": "Orange Clockwise-2",
+                "ml": "ഓറഞ്ച് ക്ലോക്ക്വൈസ്-2",
+                "hi": "नारंगी दक्षिणावर्त-2"
+            },
+            stops: {
+                "en": ["East Fort", "Manacaud", "Mukkolakkal Temple", "Bangadesh Colony", "Valiyathura", "Sanghumugham", "All Saints", "Chakkai", "Pettah", "General Hospital", "Palayam", "Statue", "Trivandrum Railway Station", "East Fort"],
+                "ml": ["ഈസ്റ്റ് ഫോർട്ട്", "മണക്കാട്", "മുക്കോലക്കൽ ക്ഷേത്രം", "ബംഗ്ലാദേശ് കോളനി", "വലിയതുറ", "സംഘമുഖം", "ഓൾ സെയിന്റ്സ്", "ചക്കായി", "പേട്ട", "ജനറൽ ആശുപത്രി", "പാലയം", "സ്റ്റാച്യൂ", "തിരുവനന്തപുരം റെയിൽവേ സ്റ്റേഷൻ", "ഈസ്റ്റ് ഫോർട്ട്"],
+                "hi": ["ईस्ट फोर्ट", "मनकाड", "मुक्कोलक्कल मंदिर", "बांग्लादेश कॉलोनी", "वलियथुरा", "संघमुखम", "ऑल सेंट्स", "चक्कई", "पेट्टाह", "जनरल अस्पताल", "पलायम", "मूर्ति", "त्रिवेंद्रम रेलवे स्टेशन", "ईस्ट फोर्ट"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "9A-2",
+            name: {
+                "en": "Orange Anti Clockwise-2",
+                "ml": "ഓറഞ്ച് ആന്റി ക്ലോക്ക്വൈസ്-2",
+                "hi": "नारंगी वामावर्त-2"
+            },
+            stops: {
+                "en": ["Trivandrum Railway Station", "Statue", "Palayam", "General Hospital", "Pettah", "Chakkai", "All Saints", "Sanghumugham", "Valiyathura", "Bangadesh Colony", "Mukkolakkal Temple", "Manacaud"],
+                "ml": ["തിരുവനന്തപുരം റെയിൽവേ സ്റ്റേഷൻ", "സ്റ്റാച്യൂ", "പാലയം", "ജനറൽ ആശുപത്രി", "പേട്ട", "ചക്കായി", "ഓൾ സെയിന്റ്സ്", "സംഘമുഖം", "വലിയതുറ", "ബംഗ്ലാദേശ് കോളനി", "മുക്കോലക്കൽ ക്ഷേത്രം", "മണക്കാട്"],
+                "hi": ["त्रिवेंद्रम रेलवे स्टेशन", "मूर्ति", "पलायम", "जनरल अस्पताल", "पेट्टाह", "चक्कई", "ऑल सेंट्स", "संघमुखम", "वलियथुरा", "बांग्लादेश कॉलोनी", "मुक्कोलक्कल मंदिर", "मनकाड"]
+            },
+            schedule: {
+                "en": "Every 30 minutes from 6:00 AM to 10:00 PM",
+                "ml": "രാവിലെ 6:00 മുതൽ രാത്രി 10:00 വരെ ഓരോ 30 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:00 बजे से रात 10:00 बजे तक हर 30 मिनट में"
+            },
+            
+        },
+        {
+            number: "4C",
+            name: {
+                "en": "Yellow Circle City Circular",
+                "ml": "മഞ്ഞ സർക്കിൾ സിറ്റി സർക്കുലാർ",
+                "hi": "पीला सर्कल सिटी सर्कुलर"
+            },
+            stops: {
+                "en": ["Ambalamukk", "Muttada", "Ulloor", "Medical College", "Pattom", "PMG Junction", "Palayam"],
+                "ml": ["അമ്പലമുക്ക്", "മുട്ടട", "ഉള്ളൂർ", "മെഡിക്കൽ കോളേജ്", "പട്ടം", "പി.എം.ജി ജംഗ്ഷൻ", "പാലയം"],
+                "hi": ["अम्बलमुक्क", "मुट्टडा", "उल्लूर", "मेडिकल कॉलेज", "पट्टम", "पीएमजी जंक्शन", "पलायम"]
+            },
+            schedule: {
+                "en": "Every 20 minutes from 6:30 AM to 9:30 PM",
+                "ml": "രാവിലെ 6:30 മുതൽ രാത്രി 9:30 വരെ ഓരോ 20 മിനിറ്റ് ഇടവിട്ട്",
+                "hi": "सुबह 6:30 बजे से रात 9:30 बजे तक हर 20 मिनट में"
+            },
+            
+        }
+    ]
+
+        // Place name mapping for all languages
+        const placeNameMap = {
+            "East Fort": { en: "East Fort", ml: "ഈസ്റ്റ് ഫോർട്ട്", hi: "ईस्ट फोर्ट" },
+            "Overbridge": { en: "Overbridge", ml: "ഓവർബ്രിഡ്ജ്", hi: "ओवरब्रिज" },
+            "Thampanoor": { en: "Thampanoor", ml: "തമ്പാനൂർ", hi: "थम्पानूर" },
+            // Add all other places in the same format
+        };
+
+        // Function to find the canonical English name for any language input
+        function findCanonicalName(input) {
+            input = input.toLowerCase().trim();
+            for (const [key, names] of Object.entries(placeNameMap)) {
+                if (key.toLowerCase() === input) return key;
+                if (names.ml.toLowerCase() === input) return key;
+                if (names.hi.toLowerCase() === input) return key;
+            }
+            return input; // Return original if not found
+        }
+        
+// Complete multilingual support for all route names and stops
+const routeTranslations = {
+    en: {
+        "East Fort": "East Fort",
+        "Thampanoor": "Thampanoor",
+        "Ayurveda College": "Ayurveda College",
+        // ... (all your existing English translations)
+    },
+    ml: {
+        "East Fort": "ഈസ്റ്റ് ഫോർട്ട്",
+        "Thampanoor": "തമ്പാനൂർ",
+        // ... (all your existing Malayalam translations)
+    },
+    hi: {
+        "East Fort": "ईस्ट फोर्ट",
+        "Thampanoor": "थम्पानूर",
+        // ... (all your existing Hindi translations)
+    }
+};
+
+// Enhanced spell corrections with multilingual support
+const spellCorrections = {
+    // English corrections
+    "eastfort": "East Fort",
+    "east fort": "East Fort",
+    "Eastfort": "East Fort",
+    "over bridge": "Overbridge",
+    "overbridge": "Overbridge",
+    "fly over": "flyover",
+    "Flyover": "flyover",
+    "Fly over":"flyover",
+    "Fly over":"flyover",
+    "Fly Over": "flyover",
+    "thampanoor": "Thampanoor",
+    "ayurveda college": "Ayurveda College",
+    "statue": "Statue",
+    "perurkada":"peroorkada",
+    "palayam": "Palayam",
+    "vellayambalam": "Vellayambalam",
+    "vazhuthacaud": "Vazhuthacaud",
+    "vazhuthakkad": "Vazhuthacaud",
+    "mettukada": "Mettukada",
+    "uppidamoodu bridge": "Uppidamoodu Bridge",
+    "vanchiyoor": "Vanchiyoor",
+    "pattur": "Pattur",
+    "general hospital": "General Hospital",
+    "generalhospital": "General Hospital",
+    "General Hospital": "General Hospital",
+    "sasthamangalam": "Sasthamangalam",
+    "maruthumkuzhi": "Maruthumkuzhi",
+    "kochar road": "Kochar Road",
+    "edapazhanji": "Edapazhanji",
+    "jagathy": "Jagathy",
+    "bakery junction": "Bakery Junction",
+    "peroorkada": "Peroorkada",
+    "perurkada": "Peroorkada",
+    "ambalamukku": "Ambalamukku",
+    "kowdiar": "Kowdiar",
+    "devaswom board": "Devaswom Board",
+    "museum": "Museum",
+    "vjt": "VJT",
+    
+    "pmg": "PMG",
+    "pattom": "Pattom",
+    "medical college": "Medical College",
+    "ulloor": "Ulloor",
+    "kesavadasapuram": "Kesavadasapuram",
+    "muttada": "Muttada",
+    "oolampara": "Oolampara",
+    "chenthitta": "Chenthitta",
+    "ptp nagar": "PTP Nagar",
+    "vettamukku": "Vettamukku",
+    "elippode": "Elippode",
+    "thirumala": "Thirumala",
+    "poojappura": "Poojappura",
+    "karamana": "Karamana",
+    "killippalam": "Killippalam",
+    "attakulangara road": "Attakulangara Road",
+    "transport bhavan": "Transport Bhavan",
+    "vazhappally": "Vazhappally",
+    "fort hospital": "Fort Hospital",
+    "pettah pallimukku": "Pettah Pallimukku",
+    "kannammoola": "Kannammoola",
+    "murinjapalam": "Murinjapalam",
+    "pottakuzhy": "Pottakuzhy",
+    "thekkumoodu": "Thekkumoodu",
+    "anadiyil hospital": "Anadiyil Hospital",
+    "law college junction": "Law College Junction",
+    "vikas bhavan depot": "Vikas Bhavan Depot",
+    "thampanoor railway station": "Thampanoor Railway Station",
+    "pettah": "Pettah",
+    "chakka": "Chakka",
+    "international airport": "International Airport",
+    "shangumukham": "Shangumukham",
+    "domestic airport": "Domestic Airport",
+    "valiyathura": "Valiyathura",
+    "perurkada":"peroorkada",
+    "mukkolakkal": "Mukkolakkal",
+    "manacaud": "Manacaud",
+    "kamaleswaram": "Kamaleswaram",
+    "ambalathara": "Ambalathara",
+    "thiruvallam": "Thiruvallam",
+    "beemapally": "Beemapally",
+    "poonthura": "Poonthura",
+    "vallakadavu": "Vallakadavu",
+
+    // Malayalam corrections
+    "ഈസ്റ്റ് ഫോർട്ട്": "East Fort",
+    "തമ്പാനൂർ": "Thampanoor",
+    "ആയുർവേദ കോളേജ്": "Ayurveda College",
+    "സ്റ്റാച്യു": "Statue",
+    "പളയം": "Palayam",
+    "വെള്ളയംബലം": "Vellayambalam",
+    "വഴുതക്കാട്": "Vazhuthacaud",
+    "മെട്ടുകട": "Mettukada",
+    "ഉപ്പിടമൂട് പാലം": "Uppidamoodu Bridge",
+    "വഞ്ചിയൂർ": "Vanchiyoor",
+    "പട്ടൂർ": "Pattur",
+    "ജനറൽ ആശുപത്രി": "General Hospital",
+    "ശാസ്താമംഗലം": "Sasthamangalam",
+    "മരുതംകുഴി": "Maruthumkuzhi",
+    "കൊച്ചാർ റോഡ്": "Kochar Road",
+    "എടപഴഞ്ചി": "Edapazhanji",
+    "ജാഗതി": "Jagathy",
+    "ബേക്കറി ജംഗ്ഷൻ": "Bakery Junction",
+    "പെരൂർക്കട": "Peroorkada",
+    "അമ്പലംമുക്ക്": "Ambalamukku",
+    "കോവിടയാർ": "Kowdiar",
+    "ദേവസ്വം ബോർഡ്": "Devaswom Board",
+    "മ്യൂസിയം": "Museum",
+    "വി.ജെ.ടി": "VJT",
+    "ഫ്ലൈഓവർ": "Flyover",
+    "പി.എം.ജി": "PMG",
+    "പട്ടം": "Pattom",
+    "മെഡിക്കൽ കോളേജ്": "Medical College",
+    "ഉള്ളൂർ": "Ulloor",
+    "കേശവദാസപുരം": "Kesavadasapuram",
+    "മുട്ടട": "Muttada",
+    "ഊലംപറ": "Oolampara",
+    "ചെന്തിട്ട": "Chenthitta",
+    "പി.ടി.പി നഗർ": "PTP Nagar",
+    "വെട്ടമുക്ക്": "Vettamukku",
+    "എളിപ്പോട്": "Elippode",
+    "തിരുമല": "Thirumala",
+    "പൂജപ്പുറ": "Poojappura",
+    "കരമന": "Karamana",
+    "കിളിപ്പാലം": "Killippalam",
+    "അട്ടക്കുളങ്ങര റോഡ്": "Attakulangara Road",
+    "ട്രാൻസ്പോർട്ട് ഭവൻ": "Transport Bhavan",
+    "വഴപ്പള്ളി": "Vazhappally",
+    "ഫോർട്ട് ആശുപത്രി": "Fort Hospital",
+    "പെട്ട പള്ളിമുക്ക്": "Pettah Pallimukku",
+    "കണ്ണമ്മൂല": "Kannammoola",
+    "മുരിഞ്ഞപ്പളം": "Murinjapalam",
+    "പൊട്ടകുഴി": "Pottakuzhy",
+    "തെക്കുമൂട്": "Thekkumoodu",
+    "ആനടിയിൽ ആശുപത്രി": "Anadiyil Hospital",
+    "ലോ കോളേജ് ജംഗ്ഷൻ": "Law College Junction",
+    "വികാസ് ഭവൻ ഡിപ്പോ": "Vikas Bhavan Depot",
+    "തമ്പാനൂർ റെയിൽവേ സ്റ്റേഷൻ": "Thampanoor Railway Station",
+    "പെട്ട": "Pettah",
+    "ചക്ക": "Chakka",
+    "അന്താരാഷ്ട്ര വിമാനത്താവളം": "International Airport",
+    "ശംഖുമുഖം": "Shangumukham",
+    "ദേശീയ വിമാനത്താവളം": "Domestic Airport",
+    "വലിയതുറ": "Valiyathura",
+    "മുക്കോലക്കൽ": "Mukkolakkal",
+    "മണയ്ക്കാട്": "Manacaud",
+    "കമലേശ്വരം": "Kamaleswaram",
+    "അമ്പലത്തറ": "Ambalathara",
+    "തിരുവല്ലം": "Thiruvallam",
+    "ബീമാപള്ളി": "Beemapally",
+    "പൂന്തുറ": "Poonthura",
+    "വള്ളക്കടവ്": "Vallakadavu",
+
+    // Hindi corrections
+    "ईस्ट फोर्ट": "East Fort",
+    "थम्पानूर": "Thampanoor",
+    "आयुर्वेद कॉलेज": "Ayurveda College",
+    "मूर्ति": "Statue",
+    "पलायम": "Palayam",
+    "वेल्लायम्बलम": "Vellayambalam",
+    "वऴुथकाड": "Vazhuthacaud",
+    "मेट्टुकाड": "Mettukada",
+    "उप्पिडामूड ब्रिज": "Uppidamoodu Bridge",
+    "वंचियूर": "Vanchiyoor",
+    "पट्टूर": "Pattur",
+    "जनरल हॉस्पिटल": "General Hospital",
+    "शास्तामंगलम": "Sasthamangalam",
+    "मरुथुम्कुझी": "Maruthumkuzhi",
+    "कोचर रोड": "Kochar Road",
+    "एडापझंजी": "Edapazhanji",
+    "जगथी": "Jagathy",
+    "बेकरी जंक्शन": "Bakery Junction",
+    "पेरूरकाड": "Peroorkada",
+    "अम्बलमुक्कु": "Ambalamukku",
+    "कोवडियार": "Kowdiar",
+    "देवस्वोम बोर्ड": "Devaswom Board",
+    "संग्रहालय": "Museum",
+    "वीजेटी": "VJT",
+    "फ्लाईओवर": "Flyover",
+    "पीएमजी": "PMG",
+    "पट्टम": "Pattom",
+    "मेडिकल कॉलेज": "Medical College",
+    "उल्लूर": "Ulloor",
+    "केशवदासपुरम": "Kesavadasapuram",
+    "मुट्टाड": "Muttada",
+    "ऊलमपरा": "Oolampara",
+    "चेंथिट्टा": "Chenthitta",
+    "पीटीपी नगर": "PTP Nagar",
+    "वेट्टामुक्कु": "Vettamukku",
+    "एलिप्पोड": "Elippode",
+    "थिरुमला": "Thirumala",
+    "पूजप्पुरा": "Poojappura",
+    "करमना": "Karamana",
+    "किलिप्पलम": "Killippalam",
+    "अट्टकुलंगरा रोड": "Attakulangara Road",
+    "ट्रांसपोर्ट भवन": "Transport Bhavan",
+    "वऴप्पल्ली": "Vazhappally",
+    "फोर्ट हॉस्पिटल": "Fort Hospital",
+    "पेट्टा पल्लिमुक्कु": "Pettah Pallimukku",
+    "कन्नम्मूला": "Kannammoola",
+    "मुरिंजपलम": "Murinjapalam",
+    "पोट्टकुझी": "Pottakuzhy",
+    "थेक्कुमूड": "Thekkumoodu",
+    "आनडियिल हॉस्पिटल": "Anadiyil Hospital",
+    "लॉ कॉलेज जंक्शन": "Law College Junction",
+    "विकास भवन डिपो": "Vikas Bhavan Depot",
+    "थम्पानूर रेलवे स्टेशन": "Thampanoor Railway Station",
+    "पेट्टा": "Pettah",
+    "चक्का": "Chakka",
+    "अंतर्राष्ट्रीय हवाई अड्डा": "International Airport",
+    "शंखमुखम": "Shangumukham",
+    "घरेलू हवाई अड्डा": "Domestic Airport",
+    "वलियथुरा": "Valiyathura",
+    "मुक्कोलक्कल": "Mukkolakkal",
+    "मनकाड": "Manacaud",
+    "कमलेश्वरम": "Kamaleswaram",
+    "अम्बलथरा": "Ambalathara",
+    "थिरुवल्लम": "Thiruvallam",
+    "बीमापल्ली": "Beemapally",
+    "पून्थुरा": "Poonthura",
+    "वल्लक्काडवु": "Vallakadavu"
+};
+
+// [Rest of your code including translations, busRoutes, and all functions...]
+
+// Enhanced findBuses function with spell correction
+function findBuses(from, to) {
+    const lang = document.querySelector('.language-btn.active').dataset.lang;
+    const currentLang = lang || 'en';
+    
+    // Correct spelling for both from and to in all languages
+    const correctedFrom = spellCorrections[from.toLowerCase()] || 
+                         Object.entries(spellCorrections).find(([key]) => 
+                             key.toLowerCase() === from.toLowerCase())?.[1] || 
+                         from;
+    
+    const correctedTo = spellCorrections[to.toLowerCase()] || 
+                       Object.entries(spellCorrections).find(([key]) => 
+                           key.toLowerCase() === to.toLowerCase())?.[1] || 
+                       to;
+
+    const matchingBuses = busRoutes.filter(route => {
+        const fromIndex = route.stops[currentLang].findIndex(stop => 
+            stop.toLowerCase().includes(correctedFrom.toLowerCase()));
+        const toIndex = route.stops[currentLang].findIndex(stop => 
+            stop.toLowerCase().includes(correctedTo.toLowerCase()));
+        
+        return fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex;
+    });
+    
+    return matchingBuses;
+}
+
+// [Rest of your functions...]
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default language and load routes
+    const defaultLangBtn = document.querySelector('.language-btn[data-lang="en"]') || 
+                         document.querySelector('.language-btn');
+    if (defaultLangBtn) {
+        defaultLangBtn.click();
+    } else {
+        populateRoutesTable();
+    }
+    
+    // Debugging
+    console.log("Total routes loaded:", busRoutes.length);
+    if (busRoutes.length > 0) {
+        console.log("First route stops:", busRoutes[0].stops.en);
+    }
+});
+
+
+        // Function to find buses between two stops
+        function findBuses(from, to) {
+            const fromCanonical = findCanonicalName(from);
+            const toCanonical = findCanonicalName(to);
+            
+            const matchingBuses = busRoutes.filter(route => {
+                const stops = route.stops[currentLang] || route.stops.en;
+                const fromIndex = stops.findIndex(stop => 
+                    stop.toLowerCase().includes(fromCanonical.toLowerCase()) || 
+                    stop.toLowerCase().includes(from.toLowerCase()));
+                const toIndex = stops.findIndex(stop => 
+                    stop.toLowerCase().includes(toCanonical.toLowerCase()) || 
+                    stop.toLowerCase().includes(to.toLowerCase()));
+                return fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex;
+            });
+            return matchingBuses;
+        }
+
+        // Function to populate routes table
+        function populateRoutesTable() {
+            const tableBody = document.getElementById('all-routes-table');
+            tableBody.innerHTML = '';
+            
+            busRoutes.forEach(route => {
+                const row = document.createElement('tr');
+                const routeNum = route.number.split('/')[0].replace(/\D/g, '');
+                row.className = `route-${routeNum}`;
+                
+                const routeName = route.name[currentLang] || route.name.en;
+                const routeStops = route.stops[currentLang] || route.stops.en;
+                
+                row.innerHTML = `
+                    <td><strong>${route.number}</strong></td>
+                    <td>${routeName}</td>
+                    <td>${routeStops.join(' → ')}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to display search results
+        function displayResults(results, from, to) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        <h3 style="color: var(--ksrtc-green);">
+                            <span data-en="No direct routes found" data-ml="നേരിട്ടുള്ള റൂട്ടുകൾ ഒന്നും കണ്ടെത്തിയില്ല" data-hi="कोई सीधा मार्ग नहीं मिला">No direct routes found</span>
+                        </h3>
+                        <p>
+                            <span data-en="We couldn't find direct buses between" data-ml="ഞങ്ങൾക്ക് നേരിട്ടുള്ള ബസുകൾ കണ്ടെത്താൻ കഴിഞ്ഞില്ല" data-hi="हमें सीधी बसें नहीं मिलीं">We couldn't find direct buses between</span> 
+                            ${from} <span data-en="and" data-ml="ഉം" data-hi="और">and</span> ${to}
+                        </p>
+                        <p><span data-en="Suggestions:" data-ml="സൂചനകൾ:" data-hi="सुझाव:">Suggestions:</span></p>
+                        <ul>
+                            <li><span data-en="Check spelling of locations" data-ml="ലൊക്കേഷനുകളുടെ സ്പെല്ലിംഗ് പരിശോധിക്കുക" data-hi="स्थानों की वर्तनी जांचें">Check spelling of locations</span></li>
+                            <li><span data-en="Try major landmarks" data-ml="പ്രധാന ലാൻഡ്മാർക്കുകൾ പരീക്ഷിക്കുക" data-hi="प्रमुख स्थलों को आजमाएं">Try major landmarks</span></li>
+                            <li><span data-en="Contact KSRTC helpline" data-ml="കെ.എസ്.ആർ.ടി.സി ഹെൽപ്പ്ലൈനുമായി ബന്ധപ്പെടുക" data-hi="केएसआरटीसी हेल्पलाइन से संपर्क करें">Contact KSRTC helpline</span></li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                resultsDiv.innerHTML = `
+                    <h2 style="color: var(--ksrtc-green); margin-top: 0;">
+                        <span data-en="Available Routes" data-ml="ലഭ്യമായ റൂട്ടുകൾ" data-hi="उपलब्ध मार्ग">Available Routes</span> 
+                        (${results.length})
+                    </h2>
+                    ${results.map(route => {
+                        const routeNum = route.number.split('/')[0].replace(/\D/g, '');
+                        const routeName = route.name[currentLang] || route.name.en;
+                        const routeStops = route.stops[currentLang] || route.stops.en;
+                        const routeSchedule = route.schedule[currentLang] || route.schedule.en;
+                        
+                        const fromCanonical = findCanonicalName(from);
+                        const toCanonical = findCanonicalName(to);
+                        
+                        const fromIndex = routeStops.findIndex(s => 
+                            s.toLowerCase().includes(fromCanonical.toLowerCase()) || 
+                            s.toLowerCase().includes(from.toLowerCase()));
+                        const toIndex = routeStops.findIndex(s => 
+                            s.toLowerCase().includes(toCanonical.toLowerCase()) || 
+                            s.toLowerCase().includes(to.toLowerCase()));
+                        const partialRoute = routeStops.slice(fromIndex, toIndex + 1);
+                        
+                        return `
+                            <div class="bus-route route-${routeNum}">
+                                <div class="route-number">
+                                    <span data-en="Route" data-ml="റൂട്ട്" data-hi="मार्ग">Route</span> ${route.number}
+                                </div>
+                                <div class="route-name">${routeName}</div>
+                                <div class="route-details">
+                                    <p><strong><span data-en="Your Route Segment" data-ml="നിങ്ങളുടെ റൂട്ട് സെഗ്മെന്റ്" data-hi="आपका मार्ग खंड">Your Route Segment</span>:</strong> ${partialRoute.join(' → ')}</p>
+                                    <p><strong><span data-en="Complete Route" data-ml="പൂർണ്ണ റൂട്ട്" data-hi="पूरा मार्ग">Complete Route</span>:</strong> ${routeStops.join(' → ')}</p>
+                                    <p><strong><span data-en="Schedule" data-ml="ഷെഡ്യൂൾ" data-hi="समय सारणी">Schedule</span>:</strong> ${routeSchedule}</p>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                `;
+            }
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active language button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en], [data-ml], [data-hi]').forEach(el => {
+                if (el.dataset[`${lang}`]) {
+                    if (el.tagName === 'INPUT') {
+                        el.placeholder = el.dataset[`placeholder-${lang}`] || el.dataset[lang];
+                    } else {
+                        el.textContent = el.dataset[lang];
+                    }
+                }
+            });
+            
+            // Update input placeholders
+            document.getElementById('from-input').placeholder = 
+                document.getElementById('from-input').dataset[`placeholder-${lang}`] || 
+                document.getElementById('from-input').dataset[lang] || 
+                "From";
+                
+            document.getElementById('to-input').placeholder = 
+                document.getElementById('to-input').dataset[`placeholder-${lang}`] || 
+                document.getElementById('to-input').dataset[lang] || 
+                "To";
+            
+            // Refresh the routes table
+            populateRoutesTable();
+        }
+        
+        // Event listeners
+        document.getElementById('search-btn').addEventListener('click', () => {
+            const from = document.getElementById('from-input').value.trim();
+            const to = document.getElementById('to-input').value.trim();
+            
+            if (!from || !to) {
+                alert(currentLang === 'ml' ? "ദയവായി ആരംഭ സ്ഥലവും ലക്ഷ്യസ്ഥാനവും നൽകുക" : 
+                      currentLang === 'hi' ? "कृपया प्रारंभिक स्थान और गंतव्य दर्ज करें" : 
+                      "Please enter both starting point and destination");
+                return;
+            }
+            
+            const results = findBuses(from, to);
+            displayResults(results, from, to);
+        });
+
+        document.getElementById('show-all-btn').addEventListener('click', () => {
+            document.getElementById('all-routes-table').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Language switch buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateRoutesTable();
+            switchLanguage('en'); // Set default language
+        });
+    </script>
+</body>
+</html>
